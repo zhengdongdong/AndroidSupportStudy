@@ -65,13 +65,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:text="RecyclerView_Header_Footer" />
+                android:text="RecyclerView_Item_Touch_Helper" />
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_swipe_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SwipeRefreshLayout" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_to_slide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="DrawerLayout" />
         </android.support.v7.widget.LinearLayoutCompat>
     </LinearLayout>
 

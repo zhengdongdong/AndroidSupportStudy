@@ -194,8 +194,8 @@ public class RecyclerViewActivity extends AppCompatActivity {
                 View child = parent.getChildAt(i);
                 // 获取 边距
                 RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-                // child 底部 , child paddingBottom,  margin 底部, 动画偏移
-                int top = child.getBottom() + child.getPaddingBottom() + params.bottomMargin + Math.round(ViewCompat.getTranslationY(child));
+                // child 底部 ,  margin 底部, 动画偏移  注: 这里不能加padding
+                int top = child.getBottom() + params.bottomMargin + Math.round(ViewCompat.getTranslationY(child));
                 int bottom = top + mDivider.getIntrinsicHeight();
                 mDivider.setBounds(left, top, right, bottom);
                 mDivider.draw(c);
@@ -215,8 +215,8 @@ public class RecyclerViewActivity extends AppCompatActivity {
             for (int i = 0; i < childCount; i++) {
                 View child = parent.getChildAt(i);
                 RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child.getLayoutParams();
-                // child 右部 , child paddingRight, margin 右部, 动画偏移
-                int left = child.getRight() + child.getPaddingRight() + params.rightMargin + Math.round(ViewCompat.getTranslationX(child));
+                // child 右部 , margin 右部, 动画偏移  注: 这里不能加padding
+                int left = child.getRight() + params.rightMargin + Math.round(ViewCompat.getTranslationX(child));
                 int right = left + mDivider.getIntrinsicWidth();
                 mDivider.setBounds(left, top, right, bottom);
                 mDivider.draw(c);

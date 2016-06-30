@@ -3,8 +3,11 @@ package com.dong.study.support;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,21 +45,21 @@ public class RecyclerViewItemTouchHelperActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recycler_item_touch_helper);
         ButterKnife.bind(this);
 
+        mContext = this;
         for (int i = 0; i < 100; i++) {
             listDatas.add(String.valueOf(i));
         }
 
-
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         adapter = new MyAdapter();
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new MyDecoration());
 
         // 1 Callback
         ItemTouchHelper helper = new ItemTouchHelper(new MyItemTouchHelperCallback());
         helper.attachToRecyclerView(recyclerView);
 
     }
-
 
     // 1 Callback
     private class MyItemTouchHelperCallback extends ItemTouchHelper.Callback {
@@ -146,14 +149,14 @@ public class RecyclerViewItemTouchHelperActivity extends AppCompatActivity {
          */
         @Override
         public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
-            if (actionState == ItemTouchHelper.ACTION_STATE_IDLE) {
+            if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
                 viewHolder.itemView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
             }
             super.onSelectedChanged(viewHolder, actionState);
         }
 
         /**
-         * 完成了 在这里恢复
+         * 完成操作后 在这里恢复状态
          *
          * @param recyclerView
          * @param viewHolder
@@ -161,6 +164,9 @@ public class RecyclerViewItemTouchHelperActivity extends AppCompatActivity {
         @Override
         public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
             viewHolder.itemView.setBackgroundColor(Color.WHITE);
+            viewHolder.itemView.setAlpha(1);
+            viewHolder.itemView.setScaleX(1);
+            viewHolder.itemView.setScaleY(1);
             super.clearView(recyclerView, viewHolder);
         }
 
@@ -180,6 +186,36 @@ public class RecyclerViewItemTouchHelperActivity extends AppCompatActivity {
         }
     }
 
+
+    private class MyDecoration extends RecyclerView.ItemDecoration {
+
+        private Drawable mDrawable;
+
+        public MyDecoration() {
+            mDrawable = mContext.getResources().getDrawable(R.drawable.item_decoration);
+        }
+
+        @Override
+        public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
+            int left = parent.getPaddingLeft();
+            int right = parent.getWidth() + parent.getPaddingRight();
+            int count = parent.getChildCount();
+            for (int i = 0; i < count; i++) {
+                View view = parent.getChildAt(i);
+                RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) view.getLayoutParams();
+
+                int top = view.getBottom() + params.bottomMargin + Math.round(ViewCompat.getTranslationY(view));
+                int bottom = top + mDrawable.getIntrinsicHeight();
+                mDrawable.setBounds(left, top, right, bottom);
+                mDrawable.draw(c);
+            }
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            outRect.set(0, 0, 0, mDrawable.getIntrinsicWidth());
+        }
+    }
 
     private class MyAdapter extends RecyclerView.Adapter<MyHolder> {
 

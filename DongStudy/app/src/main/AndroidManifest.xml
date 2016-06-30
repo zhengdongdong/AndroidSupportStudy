@@ -15,11 +15,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".support.SupportActivity" />
-        <activity android:name=".support.SwipeRefreshActivity" />
-        <activity android:name=".support.RecyclerViewActivity" />
-        <activity android:name=".support.RecyclerViewHeaderFooterActivity" />
-        <activity android:name=".support.RecyclerViewItemTouchHelperActivity" />
+        <activity android:name=".support.SupportActivity" android:screenOrientation="portrait" />
+        <activity android:name=".support.SwipeRefreshActivity" android:screenOrientation="portrait" />
+        <activity android:name=".support.RecyclerViewActivity" android:screenOrientation="portrait" />
+        <activity android:name=".support.RecyclerViewHeaderFooterActivity" android:screenOrientation="portrait" />
+        <activity android:name=".support.RecyclerViewItemTouchHelperActivity" android:screenOrientation="portrait" />
+        <activity android:name=".support.DrawerLayoutActivity" android:screenOrientation="portrait" />
 
     </application>
 
