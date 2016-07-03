@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_1"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="你好呀" />
+    <item
+        android:id="@+id/menu_2"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="还行" />
+    <item
+        android:id="@+id/menu_3"
+        android:icon="@android:drawable/ic_menu_set_as"
+        android:title="你呢" />
+
+    <item
+        android:title="啦啦啦">
+        <menu>
+            <item
+                android:id="@+id/menu_4"
+                android:icon="@android:drawable/ic_menu_delete"
+                android:title="还行1" />
+            <item
+                android:id="@+id/menu_5"
+                android:icon="@android:drawable/ic_input_add"
+                android:title="你呢1" />
+        </menu>
+    </item>
+</menu>

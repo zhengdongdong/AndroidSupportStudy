@@ -8,19 +8,36 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".support.SupportActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".support.SupportActivity" android:screenOrientation="portrait" />
-        <activity android:name=".support.SwipeRefreshActivity" android:screenOrientation="portrait" />
-        <activity android:name=".support.RecyclerViewActivity" android:screenOrientation="portrait" />
-        <activity android:name=".support.RecyclerViewHeaderFooterActivity" android:screenOrientation="portrait" />
-        <activity android:name=".support.RecyclerViewItemTouchHelperActivity" android:screenOrientation="portrait" />
-        <activity android:name=".support.DrawerLayoutActivity" android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.SwipeRefreshActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.RecyclerViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.RecyclerViewHeaderFooterActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.RecyclerViewItemTouchHelperActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.DrawerLayoutActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.NavigationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.SnackBarActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
