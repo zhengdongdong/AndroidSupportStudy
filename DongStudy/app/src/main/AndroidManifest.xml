@@ -38,6 +38,9 @@
         <activity
             android:name=".support.SnackBarActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.ToolBarActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

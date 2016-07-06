@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorAccent"
+        toolbar:title="Dong"
+        toolbar:titleTextColor="@android:color/white"
+        toolbar:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        <!--
+        toolbar:logo="@mipmap/ic_launcher"
+        toolbar:subtitle="aaa"
+        toolbar:subtitleTextColor="@android:color/white"
+        -->
+
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="正文内容" />
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#0094ff"></LinearLayout>
+
+    </android.support.v4.widget.DrawerLayout>
+
+</LinearLayout>

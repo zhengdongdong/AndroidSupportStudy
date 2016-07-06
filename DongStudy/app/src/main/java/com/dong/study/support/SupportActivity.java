@@ -135,17 +135,23 @@ public class SupportActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_to_slide)
-    public void toSlide(){
+    public void toSlide() {
         startActivity(new Intent(this, DrawerLayoutActivity.class));
     }
 
     @OnClick(R.id.btn_to_navi)
-    public void toNavi(){
+    public void toNavi() {
         startActivity(new Intent(this, NavigationActivity.class));
 
     }
+
     @OnClick(R.id.btn_to_snack_bar)
-    public void toSnackBar(){
+    public void toSnackBar() {
         startActivity(new Intent(this, NavigationActivity.class));
+    }
+
+    @OnClick(R.id.btn_to_tool_bar)
+    public void toToolBar() {
+        startActivity(new Intent(this, ToolBarActivity.class));
     }
 }

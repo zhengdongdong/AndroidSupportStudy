@@ -78,16 +78,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="DrawerLayout" />
+
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_navi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="NavigationView" />
+
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_snack_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SnackBar" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_to_tool_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ToolBar/SearchView" />
         </android.support.v7.widget.LinearLayoutCompat>
     </LinearLayout>
 
