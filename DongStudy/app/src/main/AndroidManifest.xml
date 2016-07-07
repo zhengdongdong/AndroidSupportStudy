@@ -41,6 +41,12 @@
         <activity
             android:name=".support.ToolBarActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.CardViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.PaletteActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

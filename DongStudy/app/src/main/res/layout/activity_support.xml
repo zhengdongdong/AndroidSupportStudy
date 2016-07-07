@@ -96,6 +96,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="ToolBar/SearchView" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_to_card_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CardView" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_to_palette"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Palette" />
         </android.support.v7.widget.LinearLayoutCompat>
     </LinearLayout>
 
