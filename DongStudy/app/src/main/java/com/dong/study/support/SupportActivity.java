@@ -163,4 +163,9 @@ public class SupportActivity extends AppCompatActivity {
     public void toPalette() {
         startActivity(new Intent(this, PaletteActivity.class));
     }
+
+    @OnClick(R.id.btn_to_tab_layout)
+    public void toTabLayout() {
+        startActivity(new Intent(this, TabLayoutActivity.class));
+    }
 }

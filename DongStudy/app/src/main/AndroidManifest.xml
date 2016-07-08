@@ -47,6 +47,9 @@
         <activity
             android:name=".support.PaletteActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.TabLayoutActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
