@@ -39,14 +39,20 @@ public class ImmerseActivity extends AppCompatActivity {
      * // 代码
      * 在 setContentView 前加入
      * getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+     * getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
      * <p>
-     * -- 副作用:内容会占据 status 栏
-     * 1. 解决:给顶部view(如toolbar)设置 android:fitsSystemWindows="true"
+     * -- 副作用:内容会占据 status 和 nav 栏
+     * 1. 解决: status
+     * 给顶部view(如toolbar)设置 android:fitsSystemWindows="true"
      * 让view根据系统窗口(包含状态栏等)来调整自己的布局, true:调用整个view的padding来给系统窗口留出空间
      * <p>
-     * -- 但是如果里面有ScrollView+EditText 打开键盘时 会把toolbar拉下来
+     * -- 但是如果里面有 ScrollView+EditText 打开键盘时 会把toolbar拉下来
      * 1.1 解决:给最外层设置 android:fitsSystemWindows="true" 在设置背景色, 内部 ScrollView 设置另一套背景色
-     * 1.2 解决: 给 Toolbar 设置 fitsSystemWindows 并修改 Toolbar 高度 PaddingTop: toolbarHeight + getStatusBarHeight
+     * 1.2 解决:修改 Toolbar PaddingTop: getStatusBarHeight
+     * 2. 解决: nav
+     * 底部增加一个 view, 动态设置其高度 getNavBarHeight
+     * <p>
+     * 判断是否存在 navbar NavigationBarHeight=整个屏幕的高度 - 内容部分view的高度 判断是否>0
      */
 
     @Override
@@ -61,6 +67,20 @@ public class ImmerseActivity extends AppCompatActivity {
             Class clazz = Class.forName("com.android.internal.R&dimen");
             Object object = clazz.newInstance();
             String heightStr = clazz.getField("status_bar_height").get(object).toString();
+            // 获取的是 id
+            int heightId = Integer.parseInt(heightStr);
+            // dp -> px
+            return context.getResources().getDimensionPixelSize(heightId);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private int getNavBarHeight(Context context) {
+        try {
+            Class clazz = Class.forName("com.android.internal.R&dimen");
+            Object object = clazz.newInstance();
+            String heightStr = clazz.getField("navigation_bar_height").get(object).toString();
             // 获取的是 id
             int heightId = Integer.parseInt(heightStr);
             // dp -> px
