@@ -11,6 +11,11 @@ import com.dong.study.R;
  */
 public class CardViewActivity extends AppCompatActivity {
 
+    /**
+     * foreground + clickable = 水波纹效果
+     * stateListAnimator = 下沉效果
+     */
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.dong.study.R;
@@ -11,7 +13,7 @@ import com.dong.study.R;
 /**
  * Created by Zdd on 2016/7/10.
  */
-public class ImmerseActivity extends AppCompatActivity {
+public class ImmerseActivity extends BaseImmerseActivity {
 
     /**
      * 兼容
@@ -55,38 +57,18 @@ public class ImmerseActivity extends AppCompatActivity {
      * 判断是否存在 navbar NavigationBarHeight=整个屏幕的高度 - 内容部分view的高度 判断是否>0
      */
 
+    private Toolbar toolbar;
+    private View nav;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_immerse);
 
-    }
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        nav = findViewById(R.id.nav);
 
-    private int getStatusBarHeight(Context context) {
-        try {
-            Class clazz = Class.forName("com.android.internal.R&dimen");
-            Object object = clazz.newInstance();
-            String heightStr = clazz.getField("status_bar_height").get(object).toString();
-            // 获取的是 id
-            int heightId = Integer.parseInt(heightStr);
-            // dp -> px
-            return context.getResources().getDimensionPixelSize(heightId);
-        } catch (Exception e) {
-            return 0;
-        }
-    }
+        setTranslucentColor(toolbar, nav, getResources().getColor(R.color.colorPrimary));
 
-    private int getNavBarHeight(Context context) {
-        try {
-            Class clazz = Class.forName("com.android.internal.R&dimen");
-            Object object = clazz.newInstance();
-            String heightStr = clazz.getField("navigation_bar_height").get(object).toString();
-            // 获取的是 id
-            int heightId = Integer.parseInt(heightStr);
-            // dp -> px
-            return context.getResources().getDimensionPixelSize(heightId);
-        } catch (Exception e) {
-            return 0;
-        }
     }
 }
