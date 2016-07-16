@@ -10,8 +10,11 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 /**
- * 仿 ListView 做 Header Footer
  * Created by Zdd on 2016/6/25.
+ * <p/>
+ * 仿 ListView 做 Header Footer
+ * <p/>
+ * bug: 现在只适用于 LinearLayoutManager
  */
 public class WrapRecyclerView extends RecyclerView {
 

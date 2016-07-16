@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.ViewGroup;
 
+/**
+ * 仿 ListView 给 RecyclerView 添加头部/尾部
+ */
 public class HeaderViewRecyclerAdapter extends Adapter {
 
     private Adapter mAdapter;

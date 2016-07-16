@@ -114,6 +114,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TabLayout" />
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_to_coordinator_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CoordinatorLayout" />
         </android.support.v7.widget.LinearLayoutCompat>
     </LinearLayout>
 

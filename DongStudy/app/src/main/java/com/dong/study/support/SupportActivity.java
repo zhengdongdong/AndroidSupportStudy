@@ -168,4 +168,9 @@ public class SupportActivity extends AppCompatActivity {
     public void toTabLayout() {
         startActivity(new Intent(this, TabLayoutActivity.class));
     }
+
+    @OnClick(R.id.btn_to_coordinator_layout)
+    public void toCoordinatorLayout() {
+        startActivity(new Intent(this, CoordinatorLayoutActivity.class));
+    }
 }

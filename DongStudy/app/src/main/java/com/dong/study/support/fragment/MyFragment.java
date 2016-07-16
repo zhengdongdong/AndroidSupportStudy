@@ -1,4 +1,4 @@
-package com.dong.study.support;
+package com.dong.study.support.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

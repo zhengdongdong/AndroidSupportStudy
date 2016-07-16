@@ -50,6 +50,9 @@
         <activity
             android:name=".support.TabLayoutActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".support.CoordinatorLayoutActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

@@ -115,12 +115,11 @@ public class BaseImmerseActivity extends AppCompatActivity {
 
     private int getBarHeight(Context context, String field) {
         try {
-            Class clazz = Class.forName("com.android.internal.R&dimen");
+            Class<?> clazz = Class.forName("com.android.internal.R$dimen");
             Object object = clazz.newInstance();
             String heightStr = clazz.getField(field).get(object).toString();
-            // 获取的是 id
             int heightId = Integer.parseInt(heightStr);
-            // dp -> px
+            //dp--->px
             return context.getResources().getDimensionPixelSize(heightId);
         } catch (Exception e) {
             return 0;
