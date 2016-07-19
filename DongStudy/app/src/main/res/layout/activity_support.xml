@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,114 +12,138 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="android.support.v7 包中包含了众多兼容性的控件, 能使其外观与高版本基本一致, 最低可兼容至4.0甚至3.0, 如AppcompatButton, AppCompatEditText, AppCompatTextView, AppCompatCheckBox, AppCompatImageView等" />
+            android:text="android.support.v7 包中包含了众多兼容性的控件, 能使其外观与高版本基本一致, 最低可兼容至4.0甚至3.0, 如AppcompatButton, AppCompatEditText, AppCompatTextView, AppCompatCheckBox, AppCompatImageView等"/>
 
         <android.support.v7.widget.LinearLayoutCompat xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/layout_compat"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:divider="@drawable/divider"
-            app:dividerPadding="10dp"
-            app:showDividers="middle|beginning">
+                                                      android:id="@+id/layout_compat"
+                                                      android:layout_width="match_parent"
+                                                      android:layout_height="wrap_content"
+                                                      android:orientation="vertical"
+                                                      app:divider="@drawable/divider"
+                                                      app:dividerPadding="10dp"
+                                                      app:showDividers="middle|beginning">
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_linear_compat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="LinearLayoutCompat" />
+                android:text="LinearLayoutCompat"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_alert_dialog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="AppcompatAlertDialog" />
+                android:text="AppcompatAlertDialog"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_pop_window"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ListPopWindow" />
+                android:text="ListPopWindow"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_pop_menu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PopMenu" />
+                android:text="PopMenu"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="RecyclerView" />
+                android:text="RecyclerView"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_recycler_view_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:text="RecyclerView_Header_Footer" />
+                android:text="RecyclerView_Header_Footer"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_recycler_item_touch_helper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:text="RecyclerView_Item_Touch_Helper" />
+                android:text="RecyclerView_Item_Touch_Helper"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_swipe_refresh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SwipeRefreshLayout" />
+                android:text="SwipeRefreshLayout"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_slide"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="DrawerLayout" />
+                android:text="DrawerLayout"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_navi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="NavigationView" />
+                android:text="NavigationView"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_snack_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SnackBar" />
+                android:text="SnackBar"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_tool_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="ToolBar/SearchView" />
+                android:text="ToolBar/SearchView"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_card_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CardView" />
+                android:text="CardView"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_palette"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Palette" />
+                android:text="Palette"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TabLayout" />
+                android:text="TabLayout"/>
 
             <android.support.v7.widget.AppCompatButton
                 android:id="@+id/btn_to_coordinator_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CoordinatorLayout" />
+                android:text="CoordinatorLayout"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_to_coor_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CoorTab"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_to_collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CollapsingToolbar"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_to_behavior1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Behavior1"/>
+
+            <android.support.v7.widget.AppCompatButton
+                android:id="@+id/btn_to_behavior2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Behavior2"/>
         </android.support.v7.widget.LinearLayoutCompat>
     </LinearLayout>
 

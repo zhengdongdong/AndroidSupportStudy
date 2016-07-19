@@ -114,6 +114,7 @@ public class RecyclerViewActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(MyHolder holder, int position) {
             holder.txtView.setText(listDatas.get(position));
+            holder.txtView.setPadding(0, 0, 0, 0);
             if (!(recyclerView.getLayoutManager() instanceof GridLayoutManager)) {
                 ViewGroup.LayoutParams params = holder.txtView.getLayoutParams();
                 if (recyclerView.getLayoutManager() instanceof StaggeredGridLayoutManager) {

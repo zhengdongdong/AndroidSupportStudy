@@ -173,4 +173,24 @@ public class SupportActivity extends AppCompatActivity {
     public void toCoordinatorLayout() {
         startActivity(new Intent(this, CoordinatorLayoutActivity.class));
     }
+
+    @OnClick(R.id.btn_to_coor_tab)
+    public void toCoorTab() {
+        startActivity(new Intent(this, CoorTabActivity.class));
+    }
+
+    @OnClick(R.id.btn_to_collapsing_toolbar)
+    public void toCollapsingToolbar() {
+        startActivity(new Intent(this, CollapsingToolbarActivity.class));
+    }
+
+    @OnClick(R.id.btn_to_behavior1)
+    public void toBehavior1() {
+        startActivity(new Intent(this, BehaviorActivity.class));
+    }
+
+    @OnClick(R.id.btn_to_behavior2)
+    public void toBehavior2() {
+        startActivity(new Intent(this, Behavior2Activity.class));
+    }
 }
