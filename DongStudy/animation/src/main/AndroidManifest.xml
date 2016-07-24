@@ -20,6 +20,24 @@
         <activity
             android:name=".PropertyAnimationActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".PropertyDemoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".RippleAnimationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ripple"/>
+        <activity
+            android:name=".MDViewAnimationActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".SceneTransitionAnimActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/animation"/>
+        <activity
+            android:name=".SecondActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/animation"/>
     </application>
 
 </manifest>

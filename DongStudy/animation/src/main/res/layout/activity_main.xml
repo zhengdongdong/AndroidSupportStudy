@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_property"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="属性动画"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_property_demo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="属性动画示例"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_riple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="水波纹"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_md_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="揭露效果"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_scene"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="跳转动画"/>
 </android.support.v7.widget.LinearLayoutCompat>

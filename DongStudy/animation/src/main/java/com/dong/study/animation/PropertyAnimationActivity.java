@@ -1,6 +1,7 @@
 package com.dong.study.animation;
 
 import android.animation.Animator;
+import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
@@ -176,6 +177,32 @@ public class PropertyAnimationActivity extends AppCompatActivity {
                 view.setY(pointF.y);
             }
         });
+        animator.start();
+    }
+
+    @OnClick(R.id.txt6)
+    public void toAnim6(final View view) {
+        AnimatorSet set = new AnimatorSet();
+        ObjectAnimator animator1 = ObjectAnimator.ofFloat(view, "scaleX", 1f, .5f);
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(view, "scaleY", 1f, .5f);
+        ObjectAnimator animator3 = ObjectAnimator.ofFloat(view, "translationX", 0f, 100f);
+        set.setDuration(2000);
+
+        //set.playTogether(animator1, animator2, animator3); // 同时执行
+
+        // 1 和 2 同时执行  在 3 之前
+        set.play(animator1).with(animator2).before(animator3);
+
+        set.start();
+    }
+
+    @OnClick(R.id.txt7)
+    public void toAnim7(View view) {
+        //Animator animator = AnimatorInflater.loadAnimator(this, R.animator.obj);
+
+        // set 有 ordering 属性, together 为一起, sequentially 为顺序
+        Animator animator = AnimatorInflater.loadAnimator(this, R.animator.set);
+        animator.setTarget(view);
         animator.start();
     }
 }
