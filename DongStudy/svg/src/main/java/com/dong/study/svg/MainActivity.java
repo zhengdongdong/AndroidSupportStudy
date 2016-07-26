@@ -5,6 +5,10 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * android studio 可以 new -> Vector Asset 直接创建内置的一些
+     */
+
 
     /**
      * 概念
