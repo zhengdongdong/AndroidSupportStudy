@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
      * -if (((viewFlags & CLICKABLE) == CLICKABLE ||
      * -    (viewFlags & LONG_CLICKABLE) == LONG_CLICKABLE) ||
      * -    (viewFlags & CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE) {
-     * -..... 当ACTION_UP 时, 执行了 performClick(), 里面执行了 onClickListener.onClick()
+     * -..... 当ACTION_UP 时, 执行了 performClick(), 里面执行了 mOnClickListener.onClick()
+     * -..... 所以, mOnTouchListener.onTouch() 影响 onTouchEvent() 影响 mOnClickListener.onClick
      * -    return true;
      * -}
      */
