@@ -40,4 +40,9 @@ public class AnimationActivity extends AppCompatActivity {
     public void toScene() {
         startActivity(new Intent(this, SceneTransitionAnimActivity.class));
     }
+
+    @OnClick(R.id.btn_my_anim)
+    public void toMyAnim() {
+        startActivity(new Intent(this, MyAnimActivity.class));
+    }
 }

@@ -38,6 +38,9 @@
             android:name=".SecondActivity"
             android:screenOrientation="portrait"
             android:theme="@style/animation"/>
+        <activity
+            android:name=".MyAnimActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

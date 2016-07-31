@@ -34,4 +34,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="跳转动画"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_my_anim"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="自定义动画框架"/>
 </android.support.v7.widget.LinearLayoutCompat>
