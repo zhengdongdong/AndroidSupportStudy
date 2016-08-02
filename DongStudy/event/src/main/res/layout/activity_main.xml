@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<com.dong.study.event.custom.MyLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/txt"
@@ -11,4 +12,10 @@
         android:layout_height="80dp"
         android:gravity="center"
         android:text="Hello World!"/>
-</RelativeLayout>
+
+    <com.dong.study.event.custom.MyButton
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="5dp"
+        android:text="Hello World! Button"/>
+</com.dong.study.event.custom.MyLinearLayout>
