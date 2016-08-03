@@ -20,15 +20,15 @@ public class MyButton extends Button {
 
     /*
      * dispatchTouchEvent 中 :
-     * --  如果 Enable 为 true 且 onTouchListener 为空或 onTouchListener.onTouch() 返回 false --> onTouchEvent
-     * --  如果 Enable 为 false, 不会触发 onTouchListener, 但是会执行 onTouchEvent
+     * --  如果 ENABLE_MASK 为 true 且 onTouchListener 为空或 onTouchListener.onTouch() 返回 false --> onTouchEvent
+     * --  如果 ENABLE_MASK 为 false, 不会触发 onTouchListener, 但是会执行 onTouchEvent
      * <p/>
      * -boolean dispatchTouchEvent(){
      * -    boolean result;
      * -.....
      * -    ListenerInfo li = mListenerInfo;
      * -    if (li != null && li.mOnTouchListener != null
-     * -                && (mViewFlags & ENABLED_MASK) == ENABLED  //------ enable
+     * -                && (mViewFlags & ENABLED_MASK) == ENABLED  //------ 触控可用(多点触控)
      * -                && li.mOnTouchListener.onTouch(this, event)) { //------ mOnTouchListener.onTouch()
      * -        result = true;
      * -    }
