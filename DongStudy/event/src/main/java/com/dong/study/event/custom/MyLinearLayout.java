@@ -26,7 +26,7 @@ public class MyLinearLayout extends LinearLayout {
      * -
      * -    final int action = ev.getAction();
      * -    final int actionMasked = action & MotionEvent.ACTION_MASK; // ACTION_MASK 多点触控
-     * -    if (actionMasked == MotionEvent.ACTION_DOWN) { // 初始化
+     * -    if (actionMasked == MotionEvent.ACTION_DOWN) { // 初始化, 注意 下面状态只有在 ACTION_DOWN 时才会重置
      * -        cancelAndClearTouchTargets(ev);
      * -        resetTouchState();  // 这里初始化为 FLAG_DISALLOW_INTERCEPT ==> false
      * -    }
@@ -35,9 +35,9 @@ public class MyLinearLayout extends LinearLayout {
      * -
      * -    if (actionMasked == MotionEvent.ACTION_DOWN  --------// ACTION_DOWN
      * -            || mFirstTouchTarget != null) {  --------// 后面会设置成不是 null, 一般也只有 ACTION_DOWN 的时候为空, 所以每次都会走 onInterceptTouchEvent
-     * -        /**
+     * -        
      * -         * FLAG_DISALLOW_INTERCEPT 不允许拦截
-     * -         * 该属性在 requestDisallowInterceptTouchEvent() 和 resetTouchState() 中有设置, 默认为 false 允许拦截(见上5行)
+     * -         * 该属性在 requestDisallowInterceptTouchEvent() 和 resetTouchState() 中有设置, 默认为 false 允许拦截(见上 resetTouchState() 行)
      * -         * 所以 requestDisallowInterceptTouchEvent() 的使用是在子 View 中, 每次事件开始(ACTION_DOWN 时调用)
      * *\
      * -        final boolean disallowIntercept = (mGroupFlags & FLAG_DISALLOW_INTERCEPT) != 0;
@@ -53,8 +53,9 @@ public class MyLinearLayout extends LinearLayout {
      * -
      * -    .....
      * -    if (!canceled && !intercepted) {
-     * -        // 里面会调用到 dispatchTransformedTouchEvent(), 其内部调用 child.dispatchTouchEvent(event)
-     * -        ==> dispatchTransformedTouchEvent() --> child.dispatchTouchEvent(event)
+     * -        // 里面会循环调用到 dispatchTransformedTouchEvent(), 其内部调用 child.dispatchTouchEvent(event)
+     * -        ==> for(child){ dispatchTransformedTouchEvent() } --> child.dispatchTouchEvent(event) 若 child 不为空, 交给子 chid
+     * -                                                          --> super.dispatchTouchEvent(event) 若没有, 自己处理
      * -    }
      * -    .....
      * -}
@@ -93,9 +94,9 @@ public class MyLinearLayout extends LinearLayout {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         log("LinearLayout ~~ dispatchTouchEvent --- " + ev.getAction());
-        //return super.dispatchTouchEvent(ev);
-        super.dispatchTouchEvent(ev);
-        return true;
+        return super.dispatchTouchEvent(ev);
+//        super.dispatchTouchEvent(ev);
+//        return true;
     }
 
     @Override
