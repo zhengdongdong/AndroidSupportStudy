@@ -11,3 +11,5 @@ animation : property animation, md animation layout animation
 svg: Vector
 
 event: dispatchTouchEvent, touchEvent, click etc
+
+ndk: c -- start learn C
