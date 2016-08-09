@@ -102,7 +102,7 @@ void main(){
 */
 
 // 多级指针 -- 保存一个指针变量地址的指针
-
+/*
 void main(){
 	int a = 50;
 	// p1 保存 a 的地址
@@ -113,6 +113,127 @@ void main(){
 	printf("p1 -> %#x\n", p1);
 	printf("p2 -> %#x\n", p2);
 	printf("*p2 -> %#x\n", *p2);
+
+	system("pause");
+}
+*/
+
+// 指针运算  -- 一般针对数组的 ++ -- (因为数组在内存中是线性排列的)
+/*
+void main(){
+	int ids[] = { 1, 2, 3, 5, 7 };
+	
+	// 输出数据变量名 就是数组的首地址
+	printf("%#x\n", ids);
+	printf("%#x\n", &ids[0]);
+
+	int *p = ids;
+	printf("*p %d \n", *p);
+	p++; // 向前移动 sizeof(数据类型) 个字节
+	printf("*p(p++后) %d \n", *p);
+
+	// p 首地址
+	// p 等价于 &ids[0]  p+1 等价于 &ids[1]
+	// p+i 等价于 &ids[i]
+
+	// *p 等价于 ids[0], *(a+1) 等价于 a[1]
+	// *(p+i) 等价于 a[i]
+
+	int uids[5];
+	int *p = uids;
+	int i = 0;
+	for (; p < uids + 5; p++){ // 最老的写法
+		*p = i;
+		i++;
+	}
+
+	system("pause");
+}
+*/
+
+//指针引用二维数组（行指针，列指针）
+/*
+void main(){
+	int a[2][3] = {95,82,56,17,29,30};
+	//遍历输出
+	//外层循环控制行，内层循环控制列
+	int i = 0;
+	for (; i < 2; i++){
+		int j = 0;
+		for (; j < 3; j++){
+			printf("%d,%#x	", a[i][j], &a[i][j]);
+		}
+		printf("\n");
+	}
+
+	//
+	//printf("%#x,%#x,%#x\n",a,&a,*a);
+	//printf("%d,%d,%d\n", sizeof(*a), sizeof(*&a), sizeof(**a));
+	//a是一个行指针，指向一个有三个元素的数组，12
+	//&a是一个指向二维数组的指针，当前二维 数组6个元素，24
+	//*a 是一个指向int类型数据的指针（a[0][0]），4
+	//printf("%d\n", **a);
+
+	//a是一个行指针，是数组第一行的指针，a+1第二行的指针，以此类推
+	printf("%#x,%#x\n",a,a+1);
+	//*a是数组的第一行第一个元素的指针，*a+1是数组第一行第二个元素的指针
+	printf("%#x,%#x\n",*a,*a+1);
+	//*(a+1)是数组的第二（1）行第一(0)个元素的指针
+	//注意：不一定是正常逻辑
+	printf("%#x,%#x\n",*(a+1),*(a+1)+1);
+
+
+	//取数组的第1（二）行，第2（三）个元素
+	printf("%d\n",a[1][2]);
+	printf("%d\n",*(*(a+1)+2));
+
+	//总结：
+	//a[i][j] 等价于 *(*(a+i)+j)
+	//&a[i][j] 等价于 (*(a+i)+j)
+
+	getchar();
+}
+*/
+
+// 函数指针
+/*
+void msg(int i){
+	printf("消息队列: %d\n", i);
+}
+
+void main(){
+	// 函数指针
+	// 组成
+	// 返回值类型, 函数指针名称, 函数参数列表
+	void(*fun_p)(int i) = msg;
+
+	fun_p(1);
+
+	printf("%#x\n", msg);
+	printf("%#x\n", &msg);
+
+	system("pause");
+}
+*/
+
+// 函数指针例子
+int add(int a, int b){
+	return a + b;
+}
+
+int minus(int a, int b){
+	return a - b;
+}
+
+// 相当于 java 的回调
+void msg(int(*p)(int a, int b), int m, int n){
+	int result = p(m, n);
+	printf("输出结果: %d\n", result);
+}
+
+void main(){
+	msg(add, 8, 9);
+	msg(minus, 10, 2);
 
 	system("pause");
 }
