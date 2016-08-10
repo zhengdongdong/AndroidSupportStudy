@@ -217,6 +217,7 @@ void main(){
 */
 
 // 函数指针例子
+/*
 int add(int a, int b){
 	return a + b;
 }
@@ -236,4 +237,117 @@ void main(){
 	msg(minus, 10, 2);
 
 	system("pause");
+}
+*/
+
+// 动态内存分配
+/*
+// 栈内存
+void stackFun(){
+	// 运行到这里自动分配, 方法结束, 自动释放
+	int a[1024];
+}
+
+// 堆内存
+void heapFun(){
+	// 在堆内存上分配 40M
+	int *p = malloc(1024 * 1024 * 10 * sizeof(int));
+	// int *p = calloc(len, sizeof(int));
+
+	// 释放堆内存
+	free(p);
+}
+
+void main(){
+	// c 语言内存分配
+	// 1.栈区 (stack)  
+	// 1.1.windows下, 一个应用栈内存一般分配 2M(确定的长度)
+	// 1.2.自动分配,自动释放
+	// 2.堆区 (heep)
+	// 2.1.可分配操作系统 80% 的内存
+	// 2.2.手动分配,手动释放
+	// 3.静态区(全局变量)
+	// 4.字符常量区
+	// 5.程序代码区
+
+	system("pause");
+}
+*/
+
+// 例:动态数组
+/*
+void main(){
+	// 静态分配
+	// int a[10];
+
+	// 动态分配
+	int len;
+	printf("请输入数据长度:");
+	scanf_s("%d", &len);
+
+	// 开辟内存, p 可当成数组首地址
+	int *p = malloc(len * sizeof(int));
+	// int *p = calloc(len, sizeof(int));
+	// 给数组元素赋值
+	int i = 0;
+	for (; i < len; i++){
+		p[i] = i;
+		printf("%d, %#x\n", p[i], &p[i]);
+	}
+
+	// 扩大 p 内存
+	// realloc(原内存指针, 内存扩大后的总大小)
+	int *p2 = realloc(p, (5 + len) * sizeof(int)); // p2 的地址可能和 p 一样
+
+	// 重新分配的两种情况:
+	// 1. 缩小, 缩小的部分数据会丢失
+	// 2. 扩大, 动态内存分配的内存是连续的(为什么可以代表数组)
+	// 2.1 若果当前内存后有需要的内存空间大小, 直接扩展内存, 返回原指针
+	// 2.2 若没有足够的空间大小, 再找堆中另一块有足够大小的内存空间, 把之前的数据复制过来, 并释放原来的内存
+	// 2.3 若系统没有足够的空间分配, 申请失败, 返回 NULL, 原来的指针仍然有效
+
+	if (p2 != NULL){
+		int j = 0;
+		for (; j < 5 + len; j++){
+			p2[j] = j;
+			printf("%d, %#x\n", p2[j], &p2[j]);
+		}
+		if (p != NULL){
+			free(p2);
+			p = NULL;
+		}
+		if (p2 != NULL){
+			free(p2);
+			p2 = NULL;
+		}
+	}
+	else
+	{
+		free(p);
+	}
+
+	system("pause");
+}
+*/
+
+// 字符串
+/*
+void main(){
+	// 字符串写法
+	// char str[] = { 'c', 'h', 'i', 'n', 'a', '\0' };
+	// char str[] = { 'c', 'h', 'i', 'n', 'a' }; // 这个后面会有乱码
+	// char str[8] = { 'c', 'h', 'i', 'n', 'a' }; // 这个没有, 区别在是否声明长度
+	// char str[10] = "china";
+	char* str = "china";
+	// str[0] = 'a';  char* str 不允许修改 若想修改, 使用 str[]
+	printf("%s\n", str);
+
+	system("pause");
+}
+*/
+
+// 字符串函数
+
+void main(){
+	// 引入 <string.h>
 }
