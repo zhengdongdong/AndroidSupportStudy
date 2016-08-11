@@ -1,7 +1,8 @@
-//#define _CRT_SECURE_NO_WARNINGS // 宏定义, 这里不让 scanf 报错, 或者直接使用 scanf_s()
+#define _CRT_SECURE_NO_WARNINGS // 宏定义, 这里不让 scanf 报错, 或者直接使用 scanf_s()
 // 引入头文件(.h)  -- 头文件中只有声明, 实现在 .c 中
 #include<stdio.h>
 #include<stdlib.h> // scanf
+#include<string.h>
 
 // 入口函数 - 1
 /*
@@ -312,6 +313,7 @@ void main(){
 			p2[j] = j;
 			printf("%d, %#x\n", p2[j], &p2[j]);
 		}
+		// 其实只要释放 p2 就好了, 因为只有成功分配, p 要么就是 p2, 要么就是已经被释放
 		if (p != NULL){
 			free(p2);
 			p = NULL;
@@ -347,7 +349,223 @@ void main(){
 */
 
 // 字符串函数
-
+/*
 void main(){
 	// 引入 <string.h>
+}
+*/
+
+// 结构体  -- 把不同数据类型整合起来, 成为自定义的数据类型
+/*
+struct Man{
+	// 成员
+	char name[20];
+	// char *name;
+	int age;
+	// int(*func)();
+};
+
+void main(){
+	// 初始化结构体变量
+	// struct Man m1 = { "jack", 21 };
+	// m1 = {"Dick", 12};  // 这种方法赋值完之后, 只能通过 m1.age 赋值
+	struct Man m1;
+	m1.age = 23;
+	// m1.name = "Dd";  // 当类型为 char name[20] 时不可这样赋值, 只能用下面的方法
+	strcpy(m1.name, "Dd");
+	sprintf(m1.name, "Json"); // 把内容格式化写入某个字符串
+
+	struct Man m2 = m1;
+
+	printf("%s, %d\n", m1.name, m1.age);
+	printf("%s, %d\n", m2.name, m2.age);
+
+	system("pause");
+}
+*/
+
+// 结构体的几种写法
+/*
+// 上面是写法一
+// 写法二:  声明就给了变量
+struct Man{
+	char name[20];
+} m1; // 结构体变量名
+// 写法三: 声明就赋值
+struct Man1{
+	char name[20];
+} m2 = {"Sendy"};
+// 写法四: 匿名结构体 -- 限制结构体个数
+struct{
+	char name[20];
+} m3 = {"Dd"};
+
+void main(){
+	// 写法二:
+	strcpy(m1.name, "Jack");
+	printf("%s\n", m1.name);
+	
+	// 写法三:
+	printf("%s\n", m2.name);
+
+	// 写法四:
+	printf("%s\n", m3.name);
+
+	system("pause");
+}
+*/
+
+// 结构体嵌套
+/*
+// 写法一
+//struct Teacher{
+//	char name[20];
+//};
+//struct Student{
+//	char name[20];
+//	struct Teacher t;
+//};
+
+// 写法二
+struct Student{
+	char name[20];
+	struct Teacher{   // 内部声明的结构体 也能在外部使用
+		char name[20];
+	} t;
+};
+
+void main(){
+	struct Student s = { "Dd", { "Dd" } };
+	
+
+	printf("%s, %s\n", s.name, s.t.name);
+
+	system("pause");
+}
+*/
+
+// 结构体与指针
+/*
+struct Man{
+	char name[20];
+};
+
+void main(){
+	struct Man m1 = { "Dd"};
+	struct Man *p = &m1;
+
+	printf("%s\n", m1.name);
+	printf("%s\n", (*p).name);
+	printf("%s\n", p->name);
+
+	system("pause");
+}
+*/
+
+// 结构体数组
+/*
+struct Man{
+	char name[20];
+};
+
+void main(){
+	struct Man mans[] = { { "Dd1" }, { "Dd2" }, { "Dd3" }, { "Dd4" } };
+	struct Man *p = mans;
+
+	// 结构体大小 -- 必须是最宽基本数据类型的整数倍, 如 结构体中有 {int a; double d;} 则 大小为 8*2 = 16
+	printf("%d\n", sizeof(mans));
+
+	for (; p < mans + 4; p++){
+		printf("%s\n", p->name);
+	}
+
+	system("pause");
+}
+*/
+
+/*
+typedef struct Letter{
+	char letter;
+} Letter;
+
+void main(){
+	Letter letter[] = { 
+		{ 74 }, { 88 }, { 44 }, { 32 }, 
+		{ 73 }, { 32 }, { 76 }, { 111 }, { 118 }, 
+		{ 101 }, { 32 }, { 89 }, { 111 }, { 117 }
+	};
+
+	Letter *p = letter;
+
+	for (; p < letter + sizeof(letter); p++){
+		printf("%c", p->letter);
+	}
+
+	printf("\n");
+	system("pause");
+}
+*/
+
+// 结构体动态内存分配
+/*
+struct Man{
+	char *name;
+	int age;
+};
+
+void main(){
+	// 分配内存
+	struct Man *mans = (struct Man*)malloc(sizeof(struct Man) * 10);
+	struct Man *p = mans;
+
+	p->name = "Dd";
+	p->age = 10;
+	p++;
+	p->name = "Ad";
+	p->age = 11;
+
+	struct Man *loop_man = mans;
+	for (; loop_man < mans + 2; loop_man ++){
+		printf("%s, %d\n", loop_man->name, loop_man->age);
+	}
+
+	free(mans);
+
+	system("pause");
+}
+*/
+
+// typedef 起别名
+/*
+typedef int AA; // 给 int 起一个别名, 使用时 AA a = 1; 实质就是一个 int 类型
+typedef int *AP;
+typedef struct Man{
+	char *name;
+} M, *MP; // Man 的别名为 M, Man 的指针类型别名为 MP
+
+void main(){
+	M m = { "aa" };
+	MP p = &m;
+
+	system("pause");
+}
+*/
+
+// 结构体函数指针成员
+
+typedef struct Man{
+	char name[20];
+	void(*sayHi)(char*); // 函数指针
+} Man;
+
+void hello(char* str){
+	printf("hello %s\n", str);
+}
+
+void main(){
+	Man man = { "Dd", hello};
+
+	man.sayHi(man.name);
+
+	system("pause");
 }
