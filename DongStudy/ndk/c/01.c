@@ -4,6 +4,20 @@
 #include<stdlib.h> // scanf
 #include<string.h>
 
+//ganquan.info/standard-c/function/  c语言函数速查
+
+/*
+c语言执行流程
+   预编译 : 为编译做准备工作,完成文本的替换工作
+1. 编译   : 形成目标代码
+2. 连接   : 将目标代码与c函数库连接合并,形成可执行文件
+3. 执行
+
+头文件告诉编译器有这么一个函数, 连接器负责找到这个函数的实现
+
+*/
+
+
 // 入口函数 - 1
 /*
 int main(int arg, char* str){
@@ -552,7 +566,7 @@ void main(){
 */
 
 // 结构体函数指针成员
-
+/*
 typedef struct Man{
 	char name[20];
 	void(*sayHi)(char*); // 函数指针
@@ -564,8 +578,285 @@ void hello(char* str){
 
 void main(){
 	Man man = { "Dd", hello};
-
 	man.sayHi(man.name);
+
+	system("pause");
+}
+*/
+
+// 联合体(共同体)
+// 不同类型的变量共同占用一段内存(相互覆盖), 联合变量任何时刻只有一个成员存在, 节省内存
+// 大小: 最大的成员所占的字节数
+/*
+union MyUnion{
+	int x;
+	int y;
+	double z;
+};
+
+void main(){
+	// 只有最后一次赋值有效
+	union MyUnion u; 
+	u.x = 10;
+	u.y = 11; // 当下面注释的时候, x和y 都有值, 都是11
+	//u.z = 11.2; // x , y 没有值, 只有 z 有值
+
+	
+	printf("%d, %d, %lf\n", u.x, u.y, u.z);
+
+	system("pause");
+}
+*/
+
+// 枚举 -- 限定取值范围, 
+/*
+enum Day{  // 内部实质是 0,1,2,3...  也可以手动赋值, 但不能重复
+	one,
+	two,
+	three,
+	four
+};
+void main(){
+	enum Day d = one;
+	printf("%#x, %d\n", &d, d);
+
+	d = 2;
+	printf("%#x, %d\n", &d, d);
+
+	system("pause");
+}
+*/
+
+// IO 操作 -- 读
+// c 读写文本文件与二进制文件的差别仅体现在回车换行符
+// 写文文时, 每遇到一个 \n , 会将其转换成 \r\n
+// 读文本时, 每遇到一个 \r\n , 会将其转换成 \n
+
+/*
+void main(){
+	char path[] = "D:\\a.txt";
+
+	// 以下可以组合 如: ab 追加打开一个二进制文件, 在末尾写入
+	// b   二进制文件
+	// r   只读, 文件需存在
+	// r+  可读写, 文件需存在
+	// w   只写, 若文件不存在, 会创建
+	// w+  可读写, 若文件不存在, 会创建
+	// a   以附加方式打开只写文件, 若文件不存在, 会创建, 写入会被添加到文件尾
+	// a+  以附加方式打开可读写文件, 若文件不存在, 会创建, 写入会被添加到文件尾
+	// 返回值:  文件指针, 若打开失败, 返回NULL, 并把错误代码存在 errno 中
+	FILE *f = fopen(path, "r");
+	if (f == NULL){
+		printf("文件打开失败\n");
+	}
+	else {
+		// 读取
+		char buff[50];
+		while (fgets(buff, 50, f)) {  // fgets 为读取字符串
+			printf("%s", buff);
+		}
+		fclose(f);
+	}
+
+	printf("\n");
+
+	system("pause");
+}
+*/
+
+// IO 操作 -- 写
+/*
+void main(){
+	char path[] = "D:\\a.txt";
+
+	FILE *f = fopen(path, "w");  // w 的写会覆盖
+	if (f == NULL){
+		printf("文件打开失败\n");
+	}
+	else {
+		// 写入
+		char *txt = "I'm fine";
+		fputs(txt, f);
+
+		printf("写入成功\n");
+
+		fclose(f);
+	}
+	printf("\n");
+
+	system("pause");
+}
+*/
+
+// IO 操作 -- 二进制文件 -- 复制
+/*
+void main(){
+	char path_read[] = "D:\\a.txt";
+	char path_write[] = "D:\\b.txt";
+
+	FILE *f_read = fopen(path_read, "rb"); //rb 读取二进制文件
+	FILE *f_write = fopen(path_write, "wb"); //rb 写入二进制文件
+	if (f_read == NULL){
+		printf("文件打开失败\n");
+	}
+	else {
+		int buff[50]; // 缓冲区
+		int len = 0; // 每次读取到的数据长度
+		while ((len = fread(buff, sizeof(int), 50, f_read)) != 0) {
+			fwrite(buff, sizeof(int), len, f_write);
+		}
+
+		fclose(f_read);
+		fclose(f_write);
+	}
+	printf("\n");
+
+	system("pause");
+}
+*/
+
+// IO 操作 -- 获取文件大小
+/*
+void main(){
+	char *path = "D:\\a.txt";
+	FILE *f = fopen(path, "r");
+	// 重新定位文件指针 
+	// 0 偏移量 ,SEEK_END 文件末尾
+	fseek(f, 0, SEEK_END);
+	// 返回当前文件指针相对文件开头的偏移量
+	long len = ftell(f);
+	
+	printf("%ld\n", len);
+
+	system("pause");
+}
+*/
+
+// IO 练习 -- 文件加密解密
+/*
+// 加密方法 -- 文本文件
+void crypt(char normal_path[], char crypt_path[]){
+	FILE *normal_f = fopen(normal_path, "r");
+	FILE *crypt_f = fopen(crypt_path, "w");
+	// 一次读一个字符
+	int ch;//(ch = fgetc(normal_f) != EOF)
+	while ((ch = fgetc(normal_f)) != EOF){ // End of File
+		// 加密(异或)
+		fputc(ch ^ 9, crypt_f);
+	}
+	fclose(crypt_f);
+	fclose(normal_f);
+}
+
+// 解密方法
+void decrypt(char crypt_path[], char decrypt_path[]){
+	FILE *crypt_f = fopen(crypt_path, "r");
+	FILE *decrypt_f = fopen(decrypt_path, "w");
+	// 一次读一个字符
+	int ch;
+	while ((ch = fgetc(crypt_f)) != EOF){ // End of File
+		// 解密(异或)
+		fputc(ch ^ 9, decrypt_f);
+	}
+	fclose(decrypt_f);
+	fclose(crypt_f);
+}
+
+void main(){
+	//crypt("D:\\a.txt", "D:\\b.txt");
+
+	decrypt("D:\\b.txt", "D:\\c.txt");
+
+	system("pause");
+}
+*/
+
+// IO 练习 -- 文件加密解密
+// 读取二进制文件中的数据时, 一个一个字符读取
+// 密码: love
+/*
+// 加密方法 -- 文本文件
+void crypt(char normal_path[], char crypt_path[], char password[]){
+	FILE *normal_f = fopen(normal_path, "rb");
+	FILE *crypt_f = fopen(crypt_path, "wb");
+	// 一次读一个字符
+	int ch;
+	int i = 0;
+	int pwd_len = strlen(password);
+	while ((ch = fgetc(normal_f)) != EOF){ // End of File
+		// 加密(异或)
+		fputc(ch ^ password[i % pwd_len], crypt_f);
+		i++;
+	}
+	fclose(crypt_f);
+	fclose(normal_f);
+}
+
+// 解密方法
+void decrypt(char normal_path[], char crypt_path[], char password[]){
+	FILE *normal_f = fopen(normal_path, "rb");
+	FILE *crypt_f = fopen(crypt_path, "wb");
+	// 一次读一个字符
+	int ch;
+	int i = 0;
+	int pwd_len = strlen(password);
+	while ((ch = fgetc(normal_f)) != EOF){ // End of File
+		// 解密(异或)
+		fputc(ch ^ password[i % pwd_len], crypt_f);
+		i++;
+	}
+	fclose(crypt_f);
+	fclose(normal_f);
+}
+
+void main(){
+	//crypt("D:\\a.txt", "D:\\b.txt", "love");
+
+	decrypt("D:\\b.txt", "D:\\c.txt", "love");
+
+	system("pause");
+}
+*/
+
+// define 命令
+// 宏定义(宏替换,预编译指令), 没有指定类型, 会在编译时替换到对应位置
+// 1. 定义标示
+// 2. 定义常数
+// 3. 定义"宏函数"
+
+// 如果没有定义 XX, 定义XX, 这样写防止重复引用, 一般在头文件使用
+// 新版本编译器用 #pragma once void printB();
+//#ifndef XX
+//#define XX
+////#include <string.h>
+//#endif
+
+#define MAX_LEN 100  
+
+void dd_read(){
+	printf("read\n");
+}
+void dd_write(){
+	printf("write\n");
+}
+
+#define jni(NAME) dd_##NAME();
+
+// #define LOG(FORMAT,...) printf(FORMAT, __VA_ARGS__); // __VA_ARGS__ 可变参数
+#define LOG(LEVEL, FORMAT, ...) printf(LEVEL); printf(FORMAT, __VA_ARGS__);
+#define LOG_I(FORMAT, ...) LOG("INFO:", FORMAT, __VA_ARGS__);
+void main(){
+	int i = 10;
+	if (i < MAX_LEN){
+		printf("aaa");
+	}
+
+	jni(read);
+	jni(write);
+
+	// LOG("%s%d\n","abc:", 123);
+
+	LOG_I("%s%d\n","abc:", 123);
 
 	system("pause");
 }
