@@ -1,0 +1,10 @@
+ JNI (Java Native Interface) -- Java 调用 C/C++, C/C++ 调用 Java 的一套 API
+ 1. 编写 native 方法
+ 2. 使用 javah 命令生成 .h 文件: javah com.dd.jni.JniTest
+ 3. 复制 .h 头文件到 C 工程中 
+ 4. 复制 jdk\jni.h 和 jni_md.h 到工程中, 其中 #include <jni.h> 改为 "jni.h"
+ 5. 实现 .h 头文件中声明的函数
+ 说明 window 环境下默认 .dll, linux 下 默认 .so
+ 6. 生成 dll 动态库文件 (在 vs 中, 右键解决方案 -> 配置管理器  -> x64, 项目右键属性 -> 配置类型 -> 动态库 dll)
+
+ 7. 配置 dll 文件所在目录到环境变量(Path 中), 注意配置好之后, eclipese 需要重启
