@@ -1,1 +1,1 @@
-include ':app', ':animation', ':svg', ':event'
+include ':app', ':animation', ':svg', ':event', ':slidemenu'
