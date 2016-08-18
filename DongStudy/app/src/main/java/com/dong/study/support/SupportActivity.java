@@ -193,4 +193,9 @@ public class SupportActivity extends AppCompatActivity {
     public void toBehavior2() {
         startActivity(new Intent(this, Behavior2Activity.class));
     }
+
+    @OnClick(R.id.btn_to_paint)
+    public void toPaint() {
+        startActivity(new Intent(this, PaintActivity.class));
+    }
 }
