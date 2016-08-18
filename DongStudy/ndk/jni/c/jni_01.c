@@ -60,7 +60,7 @@ String[] jobjectArray
 // c/c++ 访问 Java 成员
 // 想要获取签名, 可以通过 javap 命令获取, 如: 找到项目所在 bin 目录 使用 javap -s -p com.dd.jni.JniTest
 
-// 访问非 static 属性
+// 访问非 java static 属性
 JNIEXPORT jstring JNICALL Java_com_dd_jni_JniTest_accessField
   (JNIEnv *env, jobject jobj){
 	// 获取 jclass
@@ -82,7 +82,7 @@ JNIEXPORT jstring JNICALL Java_com_dd_jni_JniTest_accessField
 	return new_str;
 }
 
-// 访问 static 属性
+// 访问 java static 属性
 JNIEXPORT jint JNICALL Java_com_dd_jni_JniTest_accessStaticField
 (JNIEnv *env, jobject jobj){
 	// 获取 jclass
@@ -97,7 +97,7 @@ JNIEXPORT jint JNICALL Java_com_dd_jni_JniTest_accessStaticField
 	return count;
 }
 
-// 访问非 static 方法
+// 访问非 java static 方法
 JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_accessMethod
 (JNIEnv *env, jobject jobj){
 	// 获取 jclass
@@ -110,7 +110,7 @@ JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_accessMethod
 	printf("random num:%ld\n", i);
 }
 
-// 访问 static 方法
+// 访问 java static 方法
 JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_accessStaticMethod
 (JNIEnv *env, jobject jobj){
 	// 获取 jclass
@@ -122,4 +122,65 @@ JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_accessStaticMethod
 
 	char* id = (*env)->GetStringUTFChars(env, uuid, NULL);
 	printf("random uuid:%s\n", id);
+}
+
+// 访问 java 构造方法
+// 使用 java.util.Date 产生一个时间
+JNIEXPORT jobject JNICALL Java_com_dd_jni_JniTest_accessConstructor
+(JNIEnv *env, jobject jobj){
+	jclass cls = (*env)->FindClass(env, "java/util/Date");
+	// javap -s -p java.util.Date 获取签名
+	// 构造方法名使用 <init>
+	jmethodID mid = (*env)->GetMethodID(env, cls, "<init>", "()V");
+	// 实例化 Date 对象
+	jobject date_obj = (*env)->NewObject(env, cls, mid);
+	// 调用 getTime 方法
+	// 获取
+	jmethodID get_time_id = (*env)->GetMethodID(env, cls, "getTime", "()J");
+	// 调用
+	jlong time = (*env)->CallLongMethod(env, date_obj, get_time_id);
+
+	printf("c time : %lld\n", time);
+	return date_obj;
+}
+
+// 访问 java 父类方法
+JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_accessNonvirtualMethod
+(JNIEnv *env, jobject jobj){
+	// 从 jobject 获取类比 FindClass 效率高
+	jclass cls = (*env)->GetObjectClass(env, jobj);
+	// 获取 man (注意分号! 注意分号! 注意分号!)
+	jfieldID fid = (*env)->GetFieldID(env, cls, "human", "Lcom/dd/jni/Human;");
+	jobject man_obj = (*env)->GetObjectField(env, jobj, fid);
+
+	// 执行 sayHi 方法
+	jclass human_cls = (*env)->FindClass(env, "com/dd/jni/Human");
+	jmethodID mid = (*env)->GetMethodID(env, human_cls, "sayHi", "()V");
+
+	// (*env)->CallObjectMethod(env, man_obj, mid);
+	(*env)->CallNonvirtualObjectMethod(env, man_obj, human_cls, mid);
+}
+
+// 中文乱码
+JNIEXPORT jstring JNICALL Java_com_dd_jni_JniTest_chineseChar
+(JNIEnv *env, jobject jobj, jstring str){
+	char* c = (*env)->GetStringUTFChars(env, str, JNI_FALSE);
+	printf("%s\n", c);
+
+	char* c_str = "你好, C";
+	// jstring s = (*env)->NewStringUTF(env, c_str); // 乱码 utf-16
+	
+	// 执行 String(byte bytes[], String charsetName) 构造方法
+	jclass str_cls = (*env)->FindClass(env, "java/lang/String");
+	jmethodID str_mid = (*env)->GetMethodID(env, str_cls, "<init>", "([BLjava/lang/String;)V");
+
+	// jbyte -> char
+	// jbyteArray -> char[]
+	jbyteArray bytes = (*env)->NewByteArray(env, strlen(c_str));
+	(*env)->SetByteArrayRegion(env, bytes, 0, strlen(c_str), c_str);
+	
+	jstring charsetName = (*env)->NewStringUTF(env, "GB2312");
+
+	// 调用构造函数, 返回编码后的 jstring
+	return (*env)->NewObject(env, str_cls, str_mid, bytes, charsetName);
 }

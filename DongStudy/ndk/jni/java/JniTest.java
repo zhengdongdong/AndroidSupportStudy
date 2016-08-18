@@ -1,5 +1,6 @@
 package com.dd.jni;
 
+import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
@@ -13,19 +14,27 @@ public class JniTest {
 
 	public String key = "123";
 	public static int count = 9;
+	
+	public Human human = new Man();
 
 	// 编写 native 方法
 	public native static String getStringFromC();
 
 	public native String getString2FromC(int i);
 
+	public native String chineseChar(String in);
+	
 	public native String accessField();
 
 	public native int accessStaticField();
 
 	public native void accessMethod();
-	
+
 	public native void accessStaticMethod();
+
+	public native Date accessConstructor();
+	
+	public native void accessNonvirtualMethod();
 	
 	public static void main(String[] args) {
 		// 调用 static c
@@ -47,17 +56,29 @@ public class JniTest {
 
 		// 调用 c 调用 java 非 static 方法
 		t.accessMethod();
-		// 调用 c 调用 java static 方法
+		// 调用c 调用 java static 方法
 		t.accessStaticMethod();
+		// 调用c 调用 java 构造方法
+		Date date = t.accessConstructor();
+		System.out.println("java time : "+ date.getTime());
+		
+		// java 本身是 new 谁, 调用谁的方法
+		t.human.sayHi();
+		// 调用 c 调用 java 的父类方法
+		t.accessNonvirtualMethod();
+		
+		// 中文 -- 默认情况下 c 返回过来的是乱码, java 传过去的可以正常查看
+		System.out.println(t.chineseChar("冬冬"));
 	}
+	
 
 	// 产生指定范围的随机数 0-max
 	public int genRandomInt(int max) {
 		return new Random().nextInt(max);
 	}
-	
+
 	// 产生 UUID
-	public static String genUUID(){
+	public static String genUUID() {
 		return UUID.randomUUID().toString();
 	}
 }

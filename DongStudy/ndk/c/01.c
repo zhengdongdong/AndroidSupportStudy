@@ -44,6 +44,8 @@ void main(){
 	//scanf("%d", &input); #define _CRT_SECURE_NO_WARNINGS
 	scanf_s("%d", &input); 
 
+	// long long  ->  %lld
+
 	// 输入/输出占位符
 	int i = 1;
 	printf("int = %d \n", i);

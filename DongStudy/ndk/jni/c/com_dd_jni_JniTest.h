@@ -55,6 +55,13 @@ JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_accessMethod
  */
 JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_accessStaticMethod
   (JNIEnv *, jobject);
+/*
+ * Class:     com_dd_jni_JniTest
+ * Method:    accessConstructor
+ * Signature: V;
+ */
+JNIEXPORT jobject JNICALL Java_com_dd_jni_JniTest_accessConstructor
+  (JNIEnv *, jobject);
 #ifdef __cplusplus
 }
 #endif
