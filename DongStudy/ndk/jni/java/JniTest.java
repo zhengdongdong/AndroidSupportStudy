@@ -14,7 +14,7 @@ public class JniTest {
 
 	public String key = "123";
 	public static int count = 9;
-	
+
 	public Human human = new Man();
 
 	// 编写 native 方法
@@ -22,8 +22,6 @@ public class JniTest {
 
 	public native String getString2FromC(int i);
 
-	public native String chineseChar(String in);
-	
 	public native String accessField();
 
 	public native int accessStaticField();
@@ -33,9 +31,19 @@ public class JniTest {
 	public native void accessStaticMethod();
 
 	public native Date accessConstructor();
-	
+
 	public native void accessNonvirtualMethod();
-	
+
+	public native String chineseChar(String in);
+
+	public native void giveArray(int[] arr);
+
+	public native int[] getArray();
+
+	public native void localRef();
+
+	public native void cached();
+
 	public static void main(String[] args) {
 		// 调用 static c
 		System.out.println(getStringFromC());
@@ -60,17 +68,32 @@ public class JniTest {
 		t.accessStaticMethod();
 		// 调用c 调用 java 构造方法
 		Date date = t.accessConstructor();
-		System.out.println("java time : "+ date.getTime());
-		
+		System.out.println("java time : " + date.getTime());
+
 		// java 本身是 new 谁, 调用谁的方法
 		t.human.sayHi();
 		// 调用 c 调用 java 的父类方法
 		t.accessNonvirtualMethod();
-		
+
 		// 中文 -- 默认情况下 c 返回过来的是乱码, java 传过去的可以正常查看
 		System.out.println(t.chineseChar("冬冬"));
+		// 调用 c 传入数组, 排序后输出
+		int[] arrInt = { 1, 5, 2, 4 };
+		t.giveArray(arrInt);
+		for (int i : arrInt) {
+			System.out.println("arrInt : " + i);
+		}
+
+		// 调用 c 获取数组
+		int[] getArr = t.getArray();
+		for (int i : getArr) {
+			System.out.println("getArr : " + i);
+		}
+
+		for (int i = 0; i < 10; i++) {
+			t.cached();
+		}
 	}
-	
 
 	// 产生指定范围的随机数 0-max
 	public int genRandomInt(int max) {

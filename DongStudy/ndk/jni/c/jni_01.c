@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <string.h>
+#include <stdlib.h>
 #include "com_dd_jni_JniTest.h"
 
 // 每个 native 函数, 都至少有两个参数(1. JNIEnv*, jclass/jobject)
@@ -51,6 +52,7 @@ void     void
 String   jstring
 object   jobject
 byte[]   jByteArray
+int[]    jintArray
 object[] jobjectArray
 String[] jobjectArray
 ...
@@ -183,4 +185,114 @@ JNIEXPORT jstring JNICALL Java_com_dd_jni_JniTest_chineseChar
 
 	// 调用构造函数, 返回编码后的 jstring
 	return (*env)->NewObject(env, str_cls, str_mid, bytes, charsetName);
+}
+
+int compare(int *a, int *b){
+	return (*a) - (*b);
+}
+
+// 传入数组
+JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_giveArray
+(JNIEnv *env, jobject jobj, jintArray arr){
+	// jintArray -> jint 指针 -> c int 数组
+	jint *elems = (*env)->GetIntArrayElements(env, arr, NULL);
+	// 数组长度
+	int len = (*env)->GetArrayLength(env, arr);
+	// 快速排序
+	qsort(elems, len, sizeof(jint), compare); 
+	// 此时内存已修改, 但是 java 端还未同步
+	// 同步
+	// 0            java 数组进行更新, 并释放 c/c++ 数组
+	// 1/JNI_COMMIT java 数组进行更新, 不释放 c/c++ 数组(函数执行完, 仍会释放)
+	// 2/JNI_ABORT  java 数组不更新, 释放 c/c++ 数组
+	(*env)->ReleaseIntArrayElements(env, arr, elems, 0);
+}
+
+// 返回数组
+JNIEXPORT jintArray JNICALL Java_com_dd_jni_JniTest_getArray
+(JNIEnv *env, jobject jobj){
+	// 创建数组	 
+	jintArray arr = (*env)->NewIntArray(env, 5);
+	jint *elem = (*env)->GetIntArrayElements(env, arr, NULL);
+	int i = 0;
+	for (; i < 5; i++){
+		elem[i] = i;
+	}
+	// 同步
+	(*env)->ReleaseIntArrayElements(env, arr, elem, 0);
+	return arr;
+}
+
+// JNI 引用变量
+// 引用类型 : 局部引用, 全局引用
+// 作用 : 在 JNI 中告知虚拟机合适回收JNI变量
+
+// 局部引用:  通过 DeleteLocalRef 手动释放对象
+// 1. 访问了一个很大的 java 对象, 使用完之后, 还要进行复杂耗时操作
+// 2. 创建了一个局部引用, 占用大量内存, 而这些局部引用和后面操做没有关联性
+
+JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_localRef
+(JNIEnv *env, jobject jobj){
+	int i = 0;
+	for (; i < 5; i++){
+		jclass cls = (*env)->FindClass(env, "java/util/Date");
+		jmethodID mid = (*env)->GetMethodID(env, cls, "<init>", "()V");
+		jobject obj = (*env)->NewObject(env, cls, mid);
+		
+		// ...
+
+		// 后面不在使用 obj, 通知垃圾回收器 回收对象
+		(*env)->DeleteLocalRef(env, obj);
+
+		// ...
+	}
+}
+
+// 全局引用
+jstring global_str;
+
+void createGlobalStr(JNIEnv *env){
+	global_str = (*env)->NewStringUTF(env, "aaa");
+}
+
+JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_globalRef
+(JNIEnv *env, jobject jobj){
+	// 创建全局引用(实际是在其他方法中创建的)
+	createGlobalStr(env);
+
+	// ...
+
+	(*env)->DeleteGlobalRef(env, global_str);
+}
+
+// 弱全局引用 -- 内存不足时, 会被优先回收内存
+// 创建 : NewWeakGlobalRef
+// 销毁 : DeleteGlobalWeakRef
+
+// 异常处理 -- c 中的异常 java 捕捉不到
+JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_exception
+(JNIEnv *env, jobject jobj){
+	// 1. 检测是否发生 java 异常
+	jthrowable except = (*env)->ExceptionOccurred(env);
+	if (except != NULL){
+		// 让 java 代码可以继续运行(否则 java 后面的代码不会运行)
+		// 清空异常信息
+		(*env)->ExceptionClear(env);
+	}
+
+	// 2. 抛出异常给java层
+	jclass newExcCls = (*env)->FindClass(env, "java/lang/IllegalArgumentException");
+	(*env)->ThrowNew(env, newExcCls, "lalala");
+}
+
+// 缓存策略
+JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_cached
+(JNIEnv *env, jobject jobj){
+	jclass cls = (*env)->GetObjectClass(env, jobj);
+	// static(局部静态变量) : 获取Id 只获取了一次 (测试也只调用一次)
+	static jfieldID key_id = NULL;
+	if (key_id == NULL){
+		key_id = (*env)->GetFieldID(env, cls, "key", "Ljava/lang/String;");
+		printf("--------getFieldID---------\n");
+	}
 }
