@@ -22,6 +22,12 @@ public class MainActivity extends Activity {
 	 * 6. 编译生成 so 动态库
 	 * 7. 加载动态库
 	 */
+	
+	/**
+	 * 文件说明:
+	 * Android.mk -- 配置导出so包名, 开始文件
+	 * Application.mk -- 配置生成支持
+	 */
 
 	/**
 	 * 如果 4 配置完还不行 
