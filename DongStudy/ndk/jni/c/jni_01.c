@@ -72,7 +72,11 @@ JNIEXPORT jstring JNICALL Java_com_dd_jni_JniTest_accessField
 	// 获取 key 属性的值
 	jstring jstr = (*env)->GetObjectField(env, jobj, fid);
 	// jstring 本身无法修改, 这里需要 jstring -> c 字符串
-	char* c = (*env)->GetStringUTFChars(env, jstr, JNI_FALSE);
+	// 这里最后一个参数传入 jboolean 类型的地址, 由系统决定是否复制, 拿回来之后我们在做判断, 一般情况下传入 NULL 即可
+	// jboolean isCopy; 
+	// (*env)->GetStringUTFChars(env, jstr, isCopy);
+	// if(isCopy){}
+	char* c = (*env)->GetStringUTFChars(env, jstr, NULL);
 	char text[20] = "supper";
 	// 字符串拼接
 	strcat(text, c);
@@ -80,6 +84,9 @@ JNIEXPORT jstring JNICALL Java_com_dd_jni_JniTest_accessField
 	jstring new_str = (*env)->NewStringUTF(env, text);
 	// 修改 key
 	(*env)->SetObjectField(env, jobj, fid, new_str);
+
+	// 使用完字符串之后, 释放内存
+	(*env)->ReleaseStringUTFChars(env, jstr, c);
 
 	return new_str;
 }
@@ -166,7 +173,7 @@ JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_accessNonvirtualMethod
 // 中文乱码
 JNIEXPORT jstring JNICALL Java_com_dd_jni_JniTest_chineseChar
 (JNIEnv *env, jobject jobj, jstring str){
-	char* c = (*env)->GetStringUTFChars(env, str, JNI_FALSE);
+	char* c = (*env)->GetStringUTFChars(env, str, NULL);
 	printf("%s\n", c);
 
 	char* c_str = "你好, C";
@@ -269,7 +276,7 @@ JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_globalRef
 // 创建 : NewWeakGlobalRef
 // 销毁 : DeleteGlobalWeakRef
 
-// 异常处理 -- c 中的异常 java 捕捉不到
+// 异常处理 -- c 中的异常 在 java 端用 Error/Throwable 捕获
 JNIEXPORT void JNICALL Java_com_dd_jni_JniTest_exception
 (JNIEnv *env, jobject jobj){
 	// 1. 检测是否发生 java 异常

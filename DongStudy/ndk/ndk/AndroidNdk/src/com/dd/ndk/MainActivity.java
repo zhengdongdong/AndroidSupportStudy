@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class MainActivity extends Activity {
-
+	
 	/**
 	 * ndk 开发流程 
 	 * 1. 编写 java 层 Native 方法 
@@ -30,11 +30,20 @@ public class MainActivity extends Activity {
 	 */
 
 	/**
+	 * 日志输入需要在 Android.mk 文件下添加 LOCAL_LDLIBS := -llog
+	 */
+	
+	/**
 	 * 如果 4 配置完还不行 
 	 * 配置 properties -> c/c++ general -> path and symbols .
 	 * D:\Develop\Android\sdk\ndk-bound-r10\toolchains\arm-linux-androideabi-4.6\prebuilt\windows-x86_64\lib\gcc\arm-linux-androideabi\4.6\include .
 	 * D:\Develop\Android\sdk\ndk-bound-r10\toolchains\arm-linux-androideabi-4.6\prebuilt\windows-x86_64\lib\gcc\arm-linux-androideabi\4.6\include-fixed .
 	 * D:\Develop\Android\sdk\ndk-bound-r10\platforms\android-18\arch-arm下usr的include
+	 */
+	
+	/**
+	 * 每次运行都需要重新build so 包
+	 * 配置 properties -> c/c++ build -> behaviour -> 去掉 build, clean
 	 */
 	
 	@Override
@@ -43,20 +52,43 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 	}
 
+	/**
+	 * 加密
+	 */
 	public void crypt(View view) {
-		String normal = Environment.getExternalStorageDirectory()
-				.getAbsolutePath() + File.separator + "1.jpg";
-		String crypt = Environment.getExternalStorageDirectory()
-				.getAbsolutePath() + File.separator + "2.jpg";
-		Log.e("tag", normal);
+		String normal = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "1.jpg";
+		String crypt = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "2.jpg";
 		Cryptor.crypt(normal, crypt);
 	}
 
+	/**
+	 * 解密
+	 */
 	public void decrypt(View view) {
-		String crypt = Environment.getExternalStorageDirectory()
-				.getAbsolutePath() + File.separator + "2.jpg";
-		String decrypt = Environment.getExternalStorageDirectory()
-				.getAbsolutePath() + File.separator + "3.jpg";
+		String crypt = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "2.jpg";
+		String decrypt = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "3.jpg";
 		Cryptor.decrypt(crypt, decrypt);
+	}
+	
+	/**
+	 * 拆分
+	 */
+	public void diff(View view){
+		String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "1.jpg";
+		String path_pattern = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "1_%d.jpg";
+		NDKFileUtils.diff(path, path_pattern, 3);
+	}
+	
+	/**
+	 * 合并
+	 */
+	public void path(View view){
+		
+		
+		
+		
+		
+		
+		
 	}
 }

@@ -15,5 +15,17 @@
         android:layout_height="wrap_content"
         android:onClick="decrypt"
         android:text="解密" />
+    
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="diff"
+        android:text="拆分" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="path"
+        android:text="合并" />
 
 </LinearLayout>
