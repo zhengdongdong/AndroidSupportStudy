@@ -10,18 +10,34 @@ extern "C" {
 /*
  * Class:     com_dd_ndk_Cryptor
  * Method:    crypt
- * Signature: (Ljava/lang/String;)V
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_com_dd_ndk_Cryptor_crypt(JNIEnv *, jclass, jstring,
-		jstring);
+JNIEXPORT void JNICALL Java_com_dd_ndk_Cryptor_crypt
+  (JNIEnv *, jclass, jstring, jstring);
 
 /*
  * Class:     com_dd_ndk_Cryptor
  * Method:    decrypt
- * Signature: (Ljava/lang/String;)V
+ * Signature: (Ljava/lang/String;Ljava/lang/String;)V
  */
-JNIEXPORT void JNICALL Java_com_dd_ndk_Cryptor_decrypt(JNIEnv *, jclass,
-		jstring, jstring);
+JNIEXPORT void JNICALL Java_com_dd_ndk_Cryptor_decrypt
+  (JNIEnv *, jclass, jstring, jstring);
+
+/*
+ * Class:     com_dd_ndk_Cryptor
+ * Method:    diff
+ * Signature: (Ljava/lang/String;Ljava/lang/String;I)V
+ */
+JNIEXPORT void JNICALL Java_com_dd_ndk_Cryptor_diff
+  (JNIEnv *, jclass, jstring, jstring, jint);
+
+/*
+ * Class:     com_dd_ndk_Cryptor
+ * Method:    patch
+ * Signature: (Ljava/lang/String;I)V
+ */
+JNIEXPORT void JNICALL Java_com_dd_ndk_Cryptor_patch
+  (JNIEnv *, jclass, jstring, jint, jstring);
 
 #ifdef __cplusplus
 }

@@ -11,6 +11,17 @@ public class Cryptor {
 	 */
 	public native static void decrypt(String normal_path, String decrypt_path);
 
+	
+	/**
+	 * 拆分
+	 */
+	public native static void diff(String path, String pattern, int count);
+
+	/**
+	 * 合并
+	 */
+	public native static void patch(String pattern, int count, String total);
+
 	static {
 		System.loadLibrary("AndroidNdk");
 	}

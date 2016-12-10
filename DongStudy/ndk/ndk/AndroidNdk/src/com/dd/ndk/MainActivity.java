@@ -15,8 +15,8 @@ public class MainActivity extends Activity {
 	/**
 	 * ndk 开发流程 
 	 * 1. 编写 java 层 Native 方法 
-	 * 2. 使用 javah 命令生成头文件 
-	 * 3. 创建 jni 文件夹 
+	 * 2. 使用 javah 命令生成头文件(进入到scr javah com.dd.ndk.NDKFileUtils) 
+	 * 3. 创建 jni 文件夹 , 将2生成的文件复制进去
 	 * 4. 添加本地支持 android Tools -> add native support --这样就可以弹出提示, 而且不会有警告
 	 * 5. 实现头文件中定义的方法
 	 * 6. 编译生成 so 动态库
@@ -37,8 +37,8 @@ public class MainActivity extends Activity {
 	 * 如果 4 配置完还不行 
 	 * 配置 properties -> c/c++ general -> path and symbols .
 	 * D:\Develop\Android\sdk\ndk-bound-r10\toolchains\arm-linux-androideabi-4.6\prebuilt\windows-x86_64\lib\gcc\arm-linux-androideabi\4.6\include .
-	 * D:\Develop\Android\sdk\ndk-bound-r10\toolchains\arm-linux-androideabi-4.6\prebuilt\windows-x86_64\lib\gcc\arm-linux-androideabi\4.6\include-fixed .
-	 * D:\Develop\Android\sdk\ndk-bound-r10\platforms\android-18\arch-arm下usr的include
+	 * D:\Develop\Android\sdk\ndk-bound-r10\toolhains\arm-linux-androideabi-4.6\prebuilt\windows-x86_64\lib\gcc\arm-linux-androideabi\4.6\include-fixed .
+	 * D:\Develop\Android\sdk\ndk-bound-r10\platfcorms\android-18\arch-arm下usr的include
 	 */
 	
 	/**
@@ -76,19 +76,17 @@ public class MainActivity extends Activity {
 	public void diff(View view){
 		String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "1.jpg";
 		String path_pattern = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "1_%d.jpg";
-		NDKFileUtils.diff(path, path_pattern, 3);
+		Cryptor.diff(path, path_pattern, 3);
 	}
 	
 	/**
 	 * 合并
 	 */
 	public void path(View view){
+		String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "1_patch.jpg";
+		String path_pattern = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "1_%d.jpg";
 		
-		
-		
-		
-		
-		
+		Cryptor.patch(path_pattern, 3, path);
 		
 	}
 }

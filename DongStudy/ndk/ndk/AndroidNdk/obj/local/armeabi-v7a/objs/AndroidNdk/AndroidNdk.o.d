@@ -1,4 +1,4 @@
-obj/local/armeabi/objs/AndroidNdk/AndroidNdk.o: jni/AndroidNdk.c \
+obj/local/armeabi-v7a/objs/AndroidNdk/AndroidNdk.o: jni/AndroidNdk.c \
  D:/Develop/Android/sdk/ndk-bound-r10/platforms/android-8/arch-arm/usr/include/stdlib.h \
  D:/Develop/Android/sdk/ndk-bound-r10/platforms/android-8/arch-arm/usr/include/sys/cdefs.h \
  D:/Develop/Android/sdk/ndk-bound-r10/platforms/android-8/arch-arm/usr/include/sys/cdefs_elf.h \
