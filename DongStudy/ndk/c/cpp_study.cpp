@@ -153,22 +153,52 @@ void main(){
 
 
 /******************引用*****************/
+// 引用的主要功能 : 作为函数的参数或返回值, 操作起来比指针方便
+// 1. 单纯给变量起别名没有任何意义, 作为函数参数传递, 能保证参数传递过程中不产生副本
+// 2. 引用可以直接操作变量, 而指针要通过取值(*p), 间接操作变量, 指针可读性差
+/*
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
-
 using namespace std;
 
+// 作为函数参数
 void swap(int &a, int &b){
+	// 交换 a,b 的值
 	int c = 0;
 	c = a;
 	a = b;
 	b = c;
 }
 
+struct Teacher{
+	char* name;
+	int age;
+};
+// 指针写法
+void getTeacher(Teacher **p){
+	Teacher *tmp = (Teacher*)malloc(sizeof(Teacher)); // 申请内存
+	tmp->age = 20;
+	*p = tmp;
+}
+// 引用写法(Teacher* &p 代替二级指针)
+void getTeacher(Teacher* &p){
+	p = (Teacher*)malloc(sizeof(Teacher)); // 申请内存
+	p->age = 20;
+}
+
+// 常引用
+void myPrint(const int &a){
+	// 类似于 java 中的 final
+	cout << a << endl;
+}
+
 void main(){
 	int a = 10;
-	// & 在C++中表示引用, 和指针一样, 都是操作内存地址
+	// & 在 C++ 中表示引用(表示变量的别名), 和指针一样, 都是操作内存地址
+	// 引用的 & 写在变量声明时
+	// 引用必须要有值, 不能为空
+	// int &a = NULL; // 错误
 	int &b = a;
 	int *c = &a;
 
@@ -181,11 +211,85 @@ void main(){
 	swap(x, y);
 	printf("%d, %d\n", x,y);
 
+	// 指针写法
+	Teacher *t = NULL;
+	getTeacher(t);
+	cout << t->age << endl;
+
+	Teacher *t1 = NULL;
+	getTeacher(&t1);
+	cout << t1->age << endl;
+
+	// 常引用
+	int a = 10, b = 9;
+	const int &c = a;
+	// c = b; // 错误
+
+	// 常引用字面量写法
+	const int &d = 10;
+
 	system("pause");
 }
+*/
 
+/********************指针常量/常量指针**********************/
+/*
+#include <stdlib.h>
+#include <stdio.h>
 
+void main(){
+	int a = 2, b = 3;
+	// 指针常量: 不改变地址的指针, 但是可以修改指向的内容
+	int *const p1 = &a;
+	// p1 = &b; // 错误 地址不可改变
+	*p1 = 20; // 正确 可以改变内容
 
+	// 常量指针: 指向常量的指针, 内容不可修改, 可以改变地址
+	const int *p2 = &a;
+	p2 = &b; // 正确 可以改变地址
+	// *p2 = 10; // 错误 不可改变内容
+
+	system("pause");
+}
+*/
+
+/*********************函数******************/
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+#include <stdarg.h>
+
+using namespace std;
+
+// 函数可以有默认值(有默认值的参数只能在最后)
+void add(int x = 1, int y = 2){
+	cout << x + y << endl;
+}
+// 会导致调用时的重载问题
+//void add(int x, int y = 10, int z =20){}
+
+// 可变参数(java 是 int...)
+void func(int x, ...){
+	// 可变参数指针, ... 开始
+	va_list args;
+	// 读取, 从最后一个固定参数x
+	va_start(args, x);
+	// 第二个参数类型, 类型要自己控制
+	int a = va_arg(args, int);
+	cout << a << endl;
+	// 读取结束
+	va_end(args);
+}
+
+void main(){
+	add();
+	add(5);
+
+	func(9);
+	func(9,10);
+
+	system("pause");
+}
 /*
 #include <stdlib.h>
 #include <stdio.h>
@@ -194,13 +298,9 @@ void main(){
 using namespace std;
 
 void main(){
-
+	system("pause");
 }
 */
-
-
-
-
 
 
 

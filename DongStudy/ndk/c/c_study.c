@@ -269,7 +269,7 @@ void stackFun(){
 void heapFun(){
 	// 在堆内存上分配 40M
 	int *p = malloc(1024 * 1024 * 10 * sizeof(int));
-	// int *p = calloc(len, sizeof(int));
+	// int *p = calloc(len, sizeof(int)); // calloc 类似于 malloc, 只不过 calloc 会对内存进行初始化(赋值0), 效率低一些
 
 	// 释放堆内存
 	free(p);
