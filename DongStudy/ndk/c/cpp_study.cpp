@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 /*
 C与C++的关系
 1.C++可以与C代码进行混编
@@ -181,7 +182,7 @@ void getTeacher(Teacher **p){
 	tmp->age = 20;
 	*p = tmp;
 }
-// 引用写法(Teacher* &p 代替二级指针)
+// 指针的引用写法(Teacher* &p 代替二级指针  Teacher* &p = (Teacher* *p))
 void getTeacher(Teacher* &p){
 	p = (Teacher*)malloc(sizeof(Teacher)); // 申请内存
 	p->age = 20;
@@ -254,6 +255,7 @@ void main(){
 */
 
 /*********************函数******************/
+/*
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
@@ -290,6 +292,142 @@ void main(){
 
 	system("pause");
 }
+*/
+
+/****************类的写法****************/
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+#include "MyTeacher.h"
+
+using namespace std;
+
+// c++中的类, 声明在.h文件中, 实现在 .cpp 中
+
+void main(){
+	MyTeacher t1;
+	t1.name = "Json";
+	// t1.setName("Jack"); 这样调会有问题, 下面构造函数理解
+	t1.setAge(10);
+
+	cout << t1.getName() << t1.getAge() << endl;
+
+	system("pause");
+}
+*/
+
+/****************构造函数/析构函数/拷贝构造函数*****************/
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+// 构造函数
+class Teacher{
+private:
+	char* name;
+	int age;
+public:
+	// 无参构造函数, 默认(没有其他构造函数时)只要创建了对象, 就会调用无参构造函数
+	Teacher(){
+		cout << "无参构造函数" << endl;
+	}
+	// 有参构造函数, 会覆盖默认的无参构造函数
+	Teacher(char* name, int age){
+		this->name = name;
+		this->age = age;
+		cout << "调用有参构造函数" << endl;
+	}
+};
+// 析构函数
+class Student{
+private:
+	char* name;
+	int age;
+public:
+	Student(){
+		this->name = (char*)malloc(100);
+		strcpy(name, "jack");
+		age = 20;
+		cout << "无参构造函数" << endl;
+	}
+	// 析构函数, 当对象要被释放时调用
+	// 作用 : 善后
+	~Student(){
+		// 释放内容
+		free(this->name);
+		cout << "析构函数" << endl;
+	}
+};
+// 拷贝构造函数
+// 浅拷贝 : 拷贝指针的地址
+// 深拷贝 : 拷贝指针指向地址的内容
+class Person{
+private:
+	char* name;
+	int age;
+public:
+	Person(char* name, int age){
+		this->name = (char*) malloc(100);
+		strcpy(this->name, name); // 这种情况使用默认拷贝构造函数会有问题
+		this->age = age;
+		cout << "调用有参构造函数" << endl;
+	}
+	
+	// 拷贝构造函数(值拷贝,用处很多,如集合)
+	// 默认拷贝构造函数就是如下做法, 这是一种浅拷贝
+	/*Teacher(const Teacher &obj){
+		this->name = obj.name;
+		this->age = obj.age;
+		cout << "拷贝构造函数" << endl;
+	}*/
+
+	// 拷贝构造函数被调用场景(最基本的就是声明时被赋值时调用(t = t1 不算), 和java的clone类似)
+	// 1. 声明时赋值  Teacher t = t1;
+	// 2. 作为参数传入, 实参传递给形参 func(t)
+	// 3. 作为函数返回值返回给变量初始化赋值 Teacher t = func();
+	Person(const Person &obj){
+		// 深拷贝
+		int len = strlen(obj.name);
+		this->name = (char*)malloc(len + 1);;
+		strcpy(this->name, obj.name);
+		this->age = obj.age;
+		cout << "拷贝构造函数" << endl;
+	}
+	~Person(){
+		free(this->name);
+		cout << "析构函数" << endl;
+	}
+	void myPrint(){
+		cout << name << " , " << age << endl;
+	}
+};
+void func(){
+	Student s2;
+}
+void func2(){
+	// 若使用默认拷贝构造函数, func2()函数结束, Person的析构函数会被调用2次,  相当于一段内存释放两次
+	// 所以, 使用默认拷贝构造函数进行浅拷贝会出现内存问题
+	Person t4("ack", 20);
+	Person t5 = t4; // 这时拷贝构造函数被调用
+	t5.myPrint();
+}
+void main(){
+	// Teacher t1;
+	// Teacher t2("yuan", 20);
+	// Teacher t3 = Teacher("jack", 20);
+
+	// func(); // func被执行完毕的时候, 析构函数被调用
+
+	func2();
+
+	system("pause");
+}
+
+
+
 /*
 #include <stdlib.h>
 #include <stdio.h>
