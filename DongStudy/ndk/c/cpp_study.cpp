@@ -318,7 +318,7 @@ void main(){
 */
 
 /****************构造函数/析构函数/拷贝构造函数*****************/
-
+/*
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
@@ -378,11 +378,11 @@ public:
 	
 	// 拷贝构造函数(值拷贝,用处很多,如集合)
 	// 默认拷贝构造函数就是如下做法, 这是一种浅拷贝
-	/*Teacher(const Teacher &obj){
-		this->name = obj.name;
-		this->age = obj.age;
-		cout << "拷贝构造函数" << endl;
-	}*/
+	//Teacher(const Teacher &obj){
+	//	this->name = obj.name;
+	//	this->age = obj.age;
+	//	cout << "拷贝构造函数" << endl;
+	//}
 
 	// 拷贝构造函数被调用场景(最基本的就是声明时被赋值时调用(t = t1 不算), 和java的clone类似)
 	// 1. 声明时赋值  Teacher t = t1;
@@ -425,7 +425,238 @@ void main(){
 
 	system("pause");
 }
+*/
 
+
+/********************构造函数的属性初始化列表(属性对象赋值)***********************/
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+class Teacher{
+private:
+	char* name;
+public:
+	Teacher(char* name){
+		this->name = name;
+		cout << "Teacher 有参构造函数" << endl;
+	}
+	~Teacher(){
+		cout << "Teacher 析构函数" << endl;
+	}
+	char* getName(){
+		return this->name;
+	}
+};
+
+class Student{
+private:
+	int id;
+	Teacher teacher_1;  // 属性对象
+	Teacher teacher_2;
+	Teacher teacher_3;
+public:
+									// 给属性对象 Teacher 构造函数传值, 多个用逗号分隔
+	Student(int id, char* t_name) : teacher_1(t_name), 
+									teacher_2(t_name),
+									teacher_3("lala"){ 
+		this->id = id;
+		cout << "student 构造函数" << endl;
+	}
+	~Student(){
+		cout << "student 析构函数" << endl;
+	}
+	void printModel(){
+		cout << id << "," << teacher_1.getName() << endl;
+	}
+};
+
+void main(){
+	Student student(10, "Jsssson");
+	student.printModel();
+	system("pause");
+}
+*/
+
+
+/******************new/delete**********************/
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+class Teacher{
+private:
+	char* name;
+public:
+	char* getName(){
+		return this->name;
+	}
+};
+
+void main(){
+	// ******类******
+	// C++ 写法  和 malloc 一样
+	Teacher *t1 = new Teacher(); 
+	// new 出来的需要 delete 释放内存
+	delete t1;
+
+	// C 写法
+	Teacher *t2 = (Teacher*)malloc(sizeof(Teacher));
+	free(t2);
+
+	// *****数组*****
+	// c
+	int *p1 = (int*)malloc(sizeof(int)* 10);
+	p1[0] = 9;
+	free(p1);
+	
+	// C++
+	int *p2 = new int[10];
+	p2[0] = 2;
+	delete[] p2;  // 释放数组需要加上这个括号 ******
+
+	system("pause");
+}
+*/
+
+
+/************************static**************************/
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+class Teacher{
+private:
+	char* name;
+public:
+	// 静态属性
+	static int total; // 不能直接初始化
+	Teacher(char* name){ // 不能在构造函数中初始化
+		this->name = name;
+	}
+	// 静态方法
+	static void count(){
+		total++;
+		cout << total << endl;
+	}
+};
+
+// 静态属性初始化必须在外部
+int Teacher::total = 9;
+
+void main(){
+	// 访问方式一
+	Teacher t1("jack");
+	cout << t1.count << endl;
+
+	// 访问方式二
+	Teacher::total++;
+	cout << Teacher::total << endl;
+
+	Teacher::count();
+
+	system("pause");
+}
+*/
+
+/*************************类的大小*************************/
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+class A{
+public:
+	int a;
+	int b;
+	int c;
+	static int d;
+};
+class B{
+public:
+	int a;
+	int b;
+	int c;
+	void printModel(){  // 相当于函数指针 void(*printModel)() = printModel; 指针是4个字节, 实际不占内存
+
+	}
+};
+
+void main(){
+	cout << sizeof(A) << endl;
+	cout << sizeof(B) << endl;
+
+	// c/c++ 内存分区: 栈, 堆, 全局(静态, 全局), 常量区(字符串), 程序代码
+	// 只有普通属性与结构体相同的内存分布
+	// 静态属性(静态区) 和 方法(代码区)不计算在类之内
+
+	system("pause");
+}
+*/
+
+/**********************this*********************/
+// 函数是共享的, 必须要有能够标识当前对象是谁的办法 -> this
+// this 是一个常量指针 Teacher *const this
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+class Teacher
+{
+public:
+	Teacher(char* name, int age);
+	~Teacher();
+	void printModel(){
+		printf("%#x\n", this);
+		cout << this->name << " , " << this->age << endl;
+	}
+
+	// 常函数 修饰的是this
+	// 保证数据安全
+	void constFunc() const{ // 常函数内部不能修改this/属性的值 
+		// const Teacher* const this
+		// this->name = "ds";
+	}
+private:
+	char* name;
+	int age;
+};
+
+Teacher::Teacher(char* name, int age)
+{
+	this->name = name;
+	this->age = age;
+}
+Teacher::~Teacher()
+{
+}
+
+void main(){
+	Teacher t1("abc", 10);
+	t1.printModel();
+	printf("%#x\n", t1);
+
+	t1.constFunc(); // 非常量对象可以调用常量函数
+	// 调用常函数
+	const Teacher t2("cs", 22);
+	// t2.printModel(); 常量对象不能调用非常量函数
+	t2.constFunc();
+
+	system("pause");
+}
 
 
 /*
