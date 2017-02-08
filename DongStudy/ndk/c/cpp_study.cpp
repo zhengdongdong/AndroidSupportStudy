@@ -608,6 +608,7 @@ void main(){
 /**********************this*********************/
 // 函数是共享的, 必须要有能够标识当前对象是谁的办法 -> this
 // this 是一个常量指针 Teacher *const this
+/*
 #include <stdlib.h>
 #include <stdio.h>
 #include <iostream>
@@ -657,6 +658,128 @@ void main(){
 
 	system("pause");
 }
+*/
+
+/***********************友元函数**************************/
+// 友元函数中可以访问类的私有属性
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+class A{
+private:
+	int i;
+public:
+	A(int i){
+		this->i = i;
+	}
+
+	void printModel(){
+		cout << i << endl;
+	}
+	// 声明友元函数
+	friend void modifyI(A*p, int a);
+};
+
+// 实现友元函数
+void modifyI(A*p, int a){
+	p->i = a;
+}
+
+void main(){
+	A *a = new A(10);
+	a->printModel();
+
+	modifyI(a, 20);
+	a->printModel();
+
+	system("pause");
+}
+*/
+
+/********************友元类**********************/
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+// 友元类
+class A{
+	friend class B;
+private:
+	int i;
+public:
+	A(int i){
+		this->i = i;
+	}
+	void printModel(){
+		cout << i << endl;
+	}
+};
+
+class B{
+private:
+	A a;
+public:
+	// B 这个友元类可以访问A类的任何成员
+	void accessAny(){
+		a.i = 30;
+	}
+};
+
+void main(){
+
+
+	system("pause");
+}
+*/
+
+
+/******************运算符重载********************/
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+class Point{
+public:
+	int x;
+	int y;
+	Point(int x = 0, int y = 0){
+		this->x = x;
+		this->y = y;
+	}
+	void printModel(){
+		cout << this->x << " , " << this->y << endl;
+	}
+	// 和下面一样
+	//Point operator+(Point &p2){
+	//	Point tmp(this->x + p2.x, this->y + p2.y);
+	//	return tmp;
+	//}
+};
+// 重载+号
+Point operator+(Point &p1, Point &p2){
+	Point tmp(p1.x + p2.x, p1.y + p2.y);
+	return tmp;
+}
+
+void main(){
+	Point p1(100, 200);
+	Point p2(200, 300);
+
+	Point p3 = p1 + p2;
+	system("pause");
+}
+*/
+
 
 
 /*
