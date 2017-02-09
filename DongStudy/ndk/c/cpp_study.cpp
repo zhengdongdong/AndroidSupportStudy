@@ -780,7 +780,134 @@ void main(){
 }
 */
 
+/*************************继承************************/
+/*
+基类中      继承方式             子类中
+public     ＆ public继承        => public
+public     ＆ protected继承     => protected   
+public     ＆ private继承       => private
 
+protected  ＆ public继承        => protected
+protected  ＆ protected继承     => protected   
+protected  ＆ private继承       => private
+
+private    ＆ public继承        => 子类无权访问
+private    ＆ protected继承     => 子类无权访问
+private    ＆ private继承       => 子类无权访问
+*/
+
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+class Human{
+public:
+	Human(char* name, int age){
+		this->name = name;
+		this->age = age;
+	}
+	void say(){
+		cout << "说话" << endl;
+	}
+private:
+	char* name;
+	int age;
+};
+// 继承于人类
+// 只有public类型才能由子类对象访问到父类方法/属性, 子类内部不影响访问
+class Man : public Human{
+public:
+	Man(char* name, int age) : Human(name, age){
+
+	}
+	void chasing(){
+		cout << "泡妞" << endl;
+	}
+	void say(){
+		cout << "男人说话" << endl;
+	}
+};
+
+void main(){
+	Man m("jj", 20);
+	m.say(); // 重写父类方法
+	m.Human::say();// 调用父类的方法
+	m.chasing();
+
+	//Human* hp = &m;
+	//hp->say();
+
+	//Human &h1 = m;
+	//h1.say();
+
+	system("pause");
+}
+*/
+
+/*********************多继承******************/
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+//class Person{
+//public:
+//	char* name;
+//};
+//class Citizen{
+//	char* name;
+//};
+//// 多继承
+//class Student :public Person, public Citizen{
+//	void say(){
+//		// 多继承存在二义性
+//		// cout << name << endl; // 错误
+//		cout << Person::name << endl;
+//	}
+//};
+class A{
+public:
+	char* name;
+};
+// 虚继承 解决二义性
+class B :virtual public A{
+
+};
+class C :virtual public A{
+
+};
+// 多继承
+class Student : public B, public C{
+	void say(){
+		cout << name << endl;
+	}
+};
+void main(){
+
+	system("pause");
+}
+*/
+
+/************************虚函数**********************/
+
+
+
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+void main(){
+	system("pause");
+}
+*/
 
 /*
 #include <stdlib.h>
