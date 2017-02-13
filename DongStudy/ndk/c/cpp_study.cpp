@@ -847,7 +847,7 @@ void main(){
 }
 */
 
-/*********************多继承******************/
+/*********************多继承-虚类******************/
 /*
 #include <stdlib.h>
 #include <stdio.h>
@@ -893,9 +893,145 @@ void main(){
 }
 */
 
-/************************虚函数**********************/
+/************************多态-虚函数**********************/
+// 要实现多态, 父类声明时需加入 virtual 关键字
+
+// 静态多态 : 函数重载
+// 动态多态 : 程序运行过程中, 觉得哪个函数被调用(子类重写父类)
+
+// 发生多态的条件
+// 1. 继承
+// 2. 父类的引用指向或指针指向子类的对象
+// 3. 函数重写
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+class Plane{
+public:
+	// 没有实现多态的方式
+	void fly(){
+		cout << "飞机起飞" << endl;
+	}
+	// 实现多态的方式
+	virtual void land(){
+		cout << "飞机降落" << endl;
+	}
+};
+class Jet :public Plane{
+	// 没有实现多态的方式
+	void fly(){
+		cout << "直升飞机起飞" << endl;
+	}
+	// 实现多态的方式 -- 子类加不加 virtual 貌似都可以
+	virtual void land(){
+		cout << "直升飞机降落" << endl;
+	}
+};
+
+void bizPlay(Plane& p){
+	// 没有实现多态的方式
+	p.fly();
+	// 实现多态的方式
+	p.land();
+}
+
+void main(){
+	Plane p1;
+	bizPlay(p1);
+
+	Jet p2;
+	bizPlay(p2);
+
+	system("pause");
+}
+*/
+
+/*********************抽象类/接口-纯虚函数**********************/
+/*
+// 抽象类和接口实现方式一样, 只是逻辑上的划分
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+// 抽象类/接口 -- 具有纯虚函数的类
+class Shape{
+public:
+	// 纯虚函数
+	virtual void sayArea() = 0;
+};
+
+class Circle :public Shape{
+public:
+	Circle(int r){
+		this->r = r;
+	}
+	void sayArea(){
+		cout << "圆的面积" << r*r*3.14 << endl;
+	}
+private:
+	int r;
+};
+
+void main(){
+	// 抽象类不能实例化
+	// Shape s;
+	// 必须重写 sayArea() 抽象函数才能实例化对象, 如果没有实现, 子类也是抽象类
+	Circle c1(5);
+	c1.sayArea();
+
+	system("pause");
+}
+*/
 
 
+/*************************泛型--模板函数*********************/
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+//void mySwap(int& a, int& b){
+//	int tmp = 0;
+//	tmp = a;
+//	a = b;
+//	b = tmp;
+//}
+//
+//void mySwap(char& a, char& b){
+//	char tmp = 0;
+//	tmp = a;
+//	a = b;
+//	b = tmp;
+//}
+
+// 函数模板 -- 解决业务逻辑一样, 数据类型不一样
+template <typename T>
+void mySwap(T& a, T& b){
+	T tmp = 0;
+	tmp = a;
+	a = b;
+	b = tmp;
+}
+
+void main(){
+	int a = 10, b = 20;
+	mySwap(a, b);
+	cout << a << "," << b << endl;
+
+	char x = 'x', y = 'y';
+	mySwap<char>(x, y); // 这种写法一样的
+	cout << x << "," << y << endl;
+	system("pause");
+}
+*/
 
 /*
 #include <stdlib.h>
