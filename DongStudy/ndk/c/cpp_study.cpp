@@ -1033,6 +1033,8 @@ void main(){
 }
 */
 
+
+/*************************模板类*********************/
 /*
 #include <stdlib.h>
 #include <stdio.h>
@@ -1040,10 +1042,150 @@ void main(){
 
 using namespace std;
 
+// 模板类
+template<class T>
+class A
+{
+public:
+	A(T a){
+		this->a = a;
+	}
+protected:
+	T a;
+};
+
+// 普通类继承模板类
+class B :public A<int>{
+public:
+	B(int a) :A<int>(a){
+
+	}
+};
+
+// 模板类继承模板类
+template <class T>
+class C : public A<T>{
+public:
+	C(T c, T a) :A<T>(a){
+
+	}
+};
+
 void main(){
+	// 实例化模板类对象
+	A<int> a(6);
+
 	system("pause");
 }
 */
+
+/*************************异常*********************/
+/*
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+class MyException{
+public:
+	MyException(){
+
+	}
+};
+
+//void main(){
+//	// 根据抛出的异常数据类型, 进入相应的catch块中
+//	try{
+//		int age = 300;
+//		if (age > 200){
+//			// throw age;
+//			// throw "发生异常";
+//			throw 9.8;
+//		}
+//	}
+//	catch (int a){
+//		cout << "int 异常" << endl;
+//	}
+//	catch (char* b){
+//		cout << b << endl;
+//	}
+//	catch (...){
+//		cout << "未知异常" << endl;
+//	}
+//
+//	system("pause");
+//}
+
+//void main(){
+//	try{
+//		int a = 1;
+//		if (a == 1){
+//			throw MyException();
+//			// throw new MyException; 不要抛出指针 需要释放对象
+//		}
+//	}
+//	//catch (MyException ex){
+//		//cout << "MyException" << endl;
+//	//}
+//	catch (MyException* ex1){
+//		// 不推荐
+//		cout << "MyException指针" << endl;
+//		delete ex1;
+//	}
+//	catch (MyException& ex2){
+//		// 需要注释掉 ex, 因为1和3都可以catch到
+//		cout << "MyException引用" << endl;
+//	}
+//}
+
+// throw 声明函数会抛出的异常类型
+void myDiv(int a, int b) throw (char *){
+	if (b == 0){
+		throw "除数为0";
+	}
+}
+
+// 标准异常(类似于 Java 的 NullPointerException)
+
+class NullPointerException : public exception{
+public:
+	NullPointerException(char* msg) :exception(msg){
+
+	}
+};
+
+void myDiv1(int a, int b){
+	if (b == 0){
+		// 超出范围
+		throw out_of_range("超出范围");
+	}
+	else if (b > 19)
+	{
+		throw invalid_argument("参数不合法");
+	}
+	else
+	{
+		throw NullPointerException("为空");
+	}
+}
+
+void main(){
+	try{
+		// myDiv1(1, 0);
+		myDiv1(1, -1);
+	}
+	catch (out_of_range e1){
+		cout << e1.what() << endl;
+	}
+	catch (NullPointerException& e2){
+		cout << e2.what() << endl;
+	}
+
+	system("pause");
+}
+*/
+
 
 /*
 #include <stdlib.h>
