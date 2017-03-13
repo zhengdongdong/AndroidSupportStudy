@@ -1147,7 +1147,7 @@ void myDiv(int a, int b) throw (char *){
 }
 
 // 标准异常(类似于 Java 的 NullPointerException)
-
+#include<stdexcept>
 class NullPointerException : public exception{
 public:
 	NullPointerException(char* msg) :exception(msg){
@@ -1181,6 +1181,61 @@ void main(){
 	catch (NullPointerException& e2){
 		cout << e2.what() << endl;
 	}
+
+	system("pause");
+}
+*/
+
+
+
+/*************************类型转换*********************/
+/*
+// static_cast  基础类型和对象的转换
+// const_cast  用来去除变量的const限定
+// dynamic_cast 类的转换, 如多态子类转为实际类型, 转换失败结果是NULL, 直接强转失败也不知道
+// reinterpret_cast 任意指针相互转换, 一般用于函数指针
+
+// 原始自动转换, 可读性不高, 而且可能有潜在的风险
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+
+void* func(int type){
+	switch (type)
+	{
+	case 1:{
+			   int i = 9;
+			   return &i;
+	}
+	case 2:{
+			   int a = 'X';
+			   return &a;
+	}
+	default:
+		break;
+	}
+	return NULL;
+}
+
+void main(){
+	//int i = 0;
+	//// 自动转换
+	//double d = i;
+
+	//int i = 8;
+	//double d = 9.5;
+	//i = static_cast<int>(d);
+
+	// char* c_p = static_cast<char*>(func(2));
+
+	//const char c[] = "hello";
+	//// 去常量写法
+	//char* c_p = const_cast<char*>(c);
+	//c_p[1] = 'X';
+	//cout << c << endl;
 
 	system("pause");
 }
