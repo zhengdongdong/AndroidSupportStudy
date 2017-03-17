@@ -327,11 +327,11 @@ void main(){
 		int j = 0;
 		for (; j < 5 + len; j++){
 			p2[j] = j;
-			printf("%d, %#x\n", p2[j], &p2[j]);
+			printf("%d, %#x\n", p2[j], &p2[j]); // 不能使用 *p++ 输出, 会导致释放失败
 		}
 		// 其实只要释放 p2 就好了, 因为只有成功分配, p 要么就是 p2, 要么就是已经被释放
 		if (p != NULL){
-			free(p2);
+			free(p);
 			p = NULL;
 		}
 		if (p2 != NULL){
@@ -489,6 +489,7 @@ void main(){
 	struct Man *p = mans;
 
 	// 结构体大小 -- 必须是最宽基本数据类型的整数倍, 如 结构体中有 {int a; double d;} 则 大小为 8*2 = 16
+	// {int a; double d; int b} 也是 16    {int a; double d; int b; char c} 是 24
 	printf("%d\n", sizeof(mans));
 
 	for (; p < mans + 4; p++){
