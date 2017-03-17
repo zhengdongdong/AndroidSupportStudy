@@ -13,3 +13,5 @@ svg: Vector
 event: dispatchTouchEvent, touchEvent, click etc
 
 ndk: c -- start learn C
+   : jni/ndk
+   : c++
