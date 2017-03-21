@@ -598,7 +598,9 @@ union MyUnion{
 };
 
 void main(){
-	// 经过测试 先给 double 赋值, 都会有值,  先给 int 赋值, int值都是 0
+	// 经过测试 
+	// 先给 double 赋值, 都会有值(z=2,x=1,y=3 -- 3,3,2.00)
+	// 先给 int 赋值, int值都是 0(x=1,y=3,z=2 -- 0,0,2.00)
 	// 只有最后一次赋值有效
 	union MyUnion u; 
 	u.x = 10;
