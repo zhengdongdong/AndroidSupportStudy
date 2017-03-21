@@ -598,6 +598,7 @@ union MyUnion{
 };
 
 void main(){
+	// 经过测试 先给 double 赋值, 都会有值,  先给 int 赋值, int值都是 0
 	// 只有最后一次赋值有效
 	union MyUnion u; 
 	u.x = 10;
