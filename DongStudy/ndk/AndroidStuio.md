@@ -263,7 +263,7 @@ defaultConfig {
   }
 }
 ```
-3. gradle.properties 中添加配置 android.useDeprecatedNdk=true
+3. gradle.properties 中添加配置 android.useDeprecatedNdk=true 
 
 
 
