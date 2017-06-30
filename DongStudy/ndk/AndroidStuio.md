@@ -19,9 +19,9 @@
 *要手动配置 Gradle 以关联到您的原生库，您需要将 externalNativeBuild {} 块添加到模块级 build.gradle 文件中，并使用 cmake {} 或 ndkBuild {}对其进行配置(注：如果您想要将 Gradle 关联到现有 ndk-build 项目，请使用 ndkBuild {} 块而不是 cmake {}，并提供 Android.mk 文件的相对路径。如果 Application.mk 文件与您的 Android.mk 文件位于相同目录下，Gradle 也会包含此文件)
 ...
 android {
-  ...
-  defaultConfig {...}
-  buildTypes {...}
+  
+  defaultConfig {}
+  buildTypes {}
 
   // Encapsulates your external native build configurations.
   externalNativeBuild {
@@ -40,9 +40,7 @@ android {
 例如，如果您的 CMake 或 ndk-build 项目定义多个原生库，您可以使用 targets 属性仅为给定产品风味构建和打包这些库中的一部分。以下代码示例说明了您可以配置的部分属性：
 ...
 android {
-  ...
   defaultConfig {
-    ...
     // This block is different from the one you use to link Gradle
     // to your CMake or ndk-build script.
     externalNativeBuild {
@@ -62,15 +60,12 @@ android {
     }
   }
 
-  buildTypes {...}
+  buildTypes {}
 
   productFlavors {
-    ...
     demo {
-      ...
       externalNativeBuild {
         cmake {
-          ...
           // Specifies which native libraries to build and package for this
           // product flavor. If you don't configure this property, Gradle
           // builds and packages all shared object libraries that you define
@@ -81,10 +76,8 @@ android {
     }
 
     paid {
-      ...
       externalNativeBuild {
         cmake {
-          ...
           targets "native-lib-paid"
         }
       }
@@ -93,8 +86,8 @@ android {
 
   // Use this block to link Gradle to your CMake or ndk-build script.
   externalNativeBuild {
-    cmake {...}
-    // or ndkBuild {...}
+    cmake {}
+    // or ndkBuild {}
   }
 }
 ...
@@ -102,12 +95,10 @@ android {
 默认情况下，Gradle 会针对 NDK 支持的 ABI 将您的原生库构建到单独的 .so 文件中，并将其全部打包到您的 APK 中。如果您希望 Gradle 仅构建和打包原生库的特定 ABI 配置，您可以在模块级 build.gradle 文件中使用 ndk.abiFilters 标志指定这些配置，如下所示：
 ...
 android {
-  ...
   defaultConfig {
-    ...
     externalNativeBuild {
-      cmake {...}
-      // or ndkBuild {...}
+      cmake {}
+      // or ndkBuild {}
     }
 
     ndk {
@@ -117,8 +108,8 @@ android {
                    'arm64-v8a'
     }
   }
-  buildTypes {...}
-  externalNativeBuild {...}
+  buildTypes {}
+  externalNativeBuild {}
 }
 ...
 
@@ -150,7 +141,7 @@ add_library( # Specifies the name of the library.
 2.为了确保 CMake 可以在编译时定位您的标头文件，您需要将 include_directories() 命令添加到 CMake 构建脚本中并指定标头的路径, CMake 使用以下规范来为库文件命名: lib库名称.so
 例如，如果您在构建脚本中指定“native-lib”作为共享库的名称，CMake 将创建一个名称为 libnative-lib.so 的文件。不过，在 Java 代码中加载此库时，使用System.loadLibrary(“native-lib”);
 ...
-add_library(...)
+add_library()
 
 # Specifies a path to native header files.
 include_directories(src/main/cpp/include/)
@@ -170,7 +161,7 @@ find_library( # Defines the name of the path variable that stores the
 ...
 *为了确保您的原生库可以在 log 库中调用函数，您需要使用 CMake 构建脚本中的 target_link_libraries() 命令关联库：
 ...
-find_library(...)
+find_library()
 
 # Links your native library against one or more other native libraries.
 target_link_libraries( # Specifies the target library.
@@ -199,7 +190,7 @@ add_library( imported-lib
 ...
 *然后，您需要使用 set_target_properties() 命令指定库的路径，如下所示
 ...
-add_library(...)
+add_library()
 set_target_properties( # Specifies the target library.
                        imported-lib
 
