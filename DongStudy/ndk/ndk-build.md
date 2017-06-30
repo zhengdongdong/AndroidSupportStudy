@@ -1,6 +1,7 @@
 # NDK-Build
 
-> Android.mk 文件，该文件定义特定于个别模块或库的属性。 
+> Android.mk 文件，该文件定义特定于个别模块或库的属性。
+
 > Application.mk 文件，该文件为应用中使用的所有模块定义属性。
 
 ## Android.mk
