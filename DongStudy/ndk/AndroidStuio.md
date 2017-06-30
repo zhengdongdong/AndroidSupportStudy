@@ -2,26 +2,26 @@
 
 >先要做的事情, 下载工具
 
-1.NDK: 这套工具集允许您为 Android 使用 C 和 C++ 代码，并提供众多平台库，让您可以管理原生 Activity 和访问物理设备组件，例如传感器和触摸输入
-2.CMake: 一款外部构建工具，可与 Gradle 搭配使用来构建原生库。如果您只计划使用 ndk-build，则不需要此组件
-3.LLDB: 一种调试程序，Android Studio 使用它来调试原生代码。
+1. NDK: 这套工具集允许您为 Android 使用 C 和 C++ 代码，并提供众多平台库，让您可以管理原生 Activity 和访问物理设备组件，例如传感器和触摸输入
+2. CMake: 一款外部构建工具，可与 Gradle 搭配使用来构建原生库。如果您只计划使用 ndk-build，则不需要此组件
+3. LLDB: 一种调试程序，Android Studio 使用它来调试原生代码。
 
 >创建新项目
-1.在 Configure your new project 中选中 Include C++ support
-2.在 Customize C++ Support 中选择标准
+1. 在 Configure your new project 中选中 Include C++ support
+2. 在 Customize C++ Support 中选择标准
 
 * C++ Standard: 选择希望使用哪种C++标准, 选择Toolchain Default 会使用默认的CMake 设置
 * Exceptions Support: 如果希望启动C++异常处理, 选中它. Android Stduio 会将 -fexceptions 标志添加到木块级 build.grdale 文件的 cppFlags, Gradle 会将其传递到CMake
 * Runtime Type Information Support: 如果希望支持RTTI, 选中它. Android Studio 会将 -frtti 标志添加到模块级 build.gradle 文件的 cppFlags 中，Gradle 会将其传递到 CMake
 
-3.Android Stuido 会自动创建 CMake 构建脚本 CMakeLists.txt, 并将其置于模块的根目录中, 并且自动创建一个简单的示例
+3. Android Stuido 会自动创建 CMake 构建脚本 CMakeLists.txt, 并将其置于模块的根目录中, 并且自动创建一个简单的示例
 
 >向现有项目添加C/C++代码
-1.创建 CMake 构建脚本到模块根目录
+1. 创建 CMake 构建脚本到模块根目录
 
 * 如果现有原生库已包含CMakeLists.txt 构建脚本或使用 ndk-build 并包含 Android.mk, 可跳过此步骤
 
-2.配置Gradle
+2. 配置Gradle
 
 * 要手动配置 Gradle 以关联到您的原生库，您需要将 externalNativeBuild {} 块添加到模块级 build.gradle 文件中，并使用 cmake {} 或 ndkBuild {}对其进行配置(注：如果您想要将 Gradle 关联到现有 ndk-build 项目，请使用 ndkBuild {} 块而不是 cmake {}，并提供 Android.mk 文件的相对路径。如果 Application.mk 文件与您的 Android.mk 文件位于相同目录下，Gradle 也会包含此文件)
 
@@ -130,7 +130,7 @@ android {
 
 >CMake构建脚本
 
-1.要指示 CMake 从原生源代码创建一个原生库，请将 cmake_minimum_required() 和 add_library() 命令添加到您的构建脚本中()
+1. 要指示 CMake 从原生源代码创建一个原生库，请将 cmake_minimum_required() 和 add_library() 命令添加到您的构建脚本中()
 
 ```
 # Sets the minimum version of CMake required to build your native library.
@@ -155,7 +155,7 @@ add_library( # Specifies the name of the library.
              src/main/cpp/native-lib.cpp )
 ```
 
-2.为了确保 CMake 可以在编译时定位您的标头文件，您需要将 include_directories() 命令添加到 CMake 构建脚本中并指定标头的路径, CMake 使用以下规范来为库文件命名: lib库名称.so
+2. 为了确保 CMake 可以在编译时定位您的标头文件，您需要将 include_directories() 命令添加到 CMake 构建脚本中并指定标头的路径, CMake 使用以下规范来为库文件命名: lib库名称.so
 
 例如，如果您在构建脚本中指定“native-lib”作为共享库的名称，CMake 将创建一个名称为 libnative-lib.so 的文件。不过，在 Java 代码中加载此库时，使用System.loadLibrary(“native-lib”);
 
@@ -166,7 +166,7 @@ add_library()
 include_directories(src/main/cpp/include/)
 ```
 
-3.添加 NDK API
+3. 添加 NDK API
 
 * 预构建的 NDK 库已经存在于 Android 平台上，因此，您无需再构建或将其打包到 APK 中。由于 NDK 库已经是 CMake 搜索路径的一部分，您甚至不需要在您的本地 NDK 安装中指定库的位置 - 只需要向 CMake 提供您希望使用的库的名称，并将其关联到您自己的原生库。
 
@@ -208,7 +208,7 @@ add_library( app-glue
 target_link_libraries( native-lib app-glue ${log-lib} )
 ```
 
-4.添加其他预构建库
+4. 添加其他预构建库
 
 * 添加预构建库与为 CMake 指定要构建的另一个原生库类似。不过，由于库已经预先构建，您需要使用 IMPORTED 标志告知 CMake 您只希望将库导入到项目中
 
