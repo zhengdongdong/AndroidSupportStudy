@@ -248,3 +248,22 @@ include_directories( imported-lib/include/ )
 ```
 target_link_libraries( native-lib imported-lib app-glue ${log-lib} )
 ```
+
+
+# 其他版本(待测试)
+
+1. 创建 jni 目录, 并将一系列 c/mk等文件创建好
+2. gradle 中配置 
+```
+defaultConfig {
+  ...
+  ndk {
+    moduleName "MyJni" // 生成的so包名称
+    abiFilters 'armeabi-v7a', 'armeabi'
+  }
+}
+```
+3. gradle.properties 中添加配置 android.useDeprecatedNdk=true
+
+
+
