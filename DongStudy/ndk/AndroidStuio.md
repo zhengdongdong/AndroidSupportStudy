@@ -1,5 +1,7 @@
 # 2.2或更高版本 && Gradle2.2.0或更高版本
 
+>先说明一下, ndk-build方式与cmake方式类似，只需要将cmake文件改写为Android.mk和Appliction.mk文件。在CMakeLists.txt加载的位置将CMakeLists.txt替换为Android.mk即可, Gradle 中, 将 cmake{path file("src/main/jni/CMakeLists.txt")} 替换为 ndkBuild{path file("src/main/jni/Android.mk")}
+
 ## 先要做的事情, 下载工具
 
 1. NDK: 这套工具集允许您为 Android 使用 C 和 C++ 代码，并提供众多平台库，让您可以管理原生 Activity 和访问物理设备组件，例如传感器和触摸输入
@@ -18,7 +20,7 @@
 3. Android Stuido 会自动创建 CMake 构建脚本 CMakeLists.txt, 并将其置于模块的根目录中, 并且自动创建一个简单的示例
 
 ## 向现有项目添加C/C++代码
-1. 创建 CMake 构建脚本到模块根目录
+1. 创建 CMake 构建脚本(CMakeLists.txt)到模块根目录 或者 ndk-build 构建脚本(Android.mk, Application.mk)
 >如果现有原生库已包含CMakeLists.txt 构建脚本或使用 ndk-build 并包含 Android.mk, 可跳过此步骤
 
 2. 配置Gradle
