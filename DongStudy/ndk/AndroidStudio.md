@@ -1,5 +1,14 @@
 # 2.2或更高版本 && Gradle2.2.0或更高版本
 
+>建议:
+>一般使用实验性的Gradle插件或者使用最新Android Studio 2.2 及以上版本推出的CMake/ndk-build构建Android 项目的C/C++部分.
+>对于少量使用C++的新Android项目, 建议使用实验性Gradle, 对于大量使用C++或者希望获得稳定的构建配置Android项目, 建议使用CMake方式.
+>一下情况下 CMake 和 ndk-build 方式比 Gradle 方式要好:
+>1. 无法承受C/C++构建中使用实验性插件所带来的风险
+>2. 将在多个平台间共享C/C++构建系统项目
+>3. 要使用Gradle 中不可用的高级功能(如NEON支持)
+
+
 >先说明一下, ndk-build方式与cmake方式类似，只需要将cmake文件改写为Android.mk和Appliction.mk文件。在CMakeLists.txt加载的位置将CMakeLists.txt替换为Android.mk即可, Gradle 中, 将 cmake{path file("src/main/jni/CMakeLists.txt")} 替换为 ndkBuild{path file("src/main/jni/Android.mk")}
 
 ## 先要做的事情, 下载工具
