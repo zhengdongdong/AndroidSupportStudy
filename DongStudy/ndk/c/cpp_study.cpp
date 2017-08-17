@@ -594,8 +594,8 @@ public:
 };
 
 void main(){
-	cout << sizeof(A) << endl;
-	cout << sizeof(B) << endl;
+	cout << sizeof(A) << endl; // 12
+	cout << sizeof(B) << endl; // 12
 
 	// c/c++ 内存分区: 栈, 堆, 全局(静态, 全局), 常量区(字符串), 程序代码
 	// 只有普通属性与结构体相同的内存分布
@@ -941,10 +941,10 @@ void bizPlay(Plane& p){
 
 void main(){
 	Plane p1;
-	bizPlay(p1);
+	bizPlay(p1); // 飞机起飞  飞机降落
 
 	Jet p2;
-	bizPlay(p2);
+	bizPlay(p2); // 飞机起飞  直升飞机降落
 
 	system("pause");
 }
